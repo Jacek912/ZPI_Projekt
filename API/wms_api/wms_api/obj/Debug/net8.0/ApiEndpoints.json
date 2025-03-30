@@ -1,15 +1,15 @@
 [
   {
-    "ContainingType": "wms_api.Controllers.WeatherForecastController",
+    "ContainingType": "wms_api.Controllers.OperationLogController",
     "Method": "Get",
-    "RelativePath": "WeatherForecast",
+    "RelativePath": "OperationLog",
     "HttpMethod": "GET",
     "IsController": true,
     "Order": 0,
     "Parameters": [],
     "ReturnTypes": [
       {
-        "Type": "System.Collections.Generic.IEnumerable\u00601[[wms_api.WeatherForecast, wms_api, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+        "Type": "wms_api.OperationLog",
         "MediaTypes": [
           "text/plain",
           "application/json",
@@ -18,6 +18,53 @@
         "StatusCode": 200
       }
     ],
-    "EndpointName": "GetWeatherForecast"
+    "EndpointName": "GetOperationLog"
+  },
+  {
+    "ContainingType": "wms_api.Controllers.ProductController",
+    "Method": "Get",
+    "RelativePath": "Product",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": [
+      {
+        "Type": "wms_api.Product",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ],
+    "EndpointName": "GetProduct"
+  },
+  {
+    "ContainingType": "wms_api.Controllers.UserController",
+    "Method": "Get",
+    "RelativePath": "User/{Name}",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "Name",
+        "Type": "System.String",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "wms_api.User",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
   }
 ]

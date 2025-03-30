@@ -5,38 +5,98 @@
     "version": "1.0"
   },
   "paths": {
-    "/WeatherForecast": {
+    "/OperationLog": {
       "get": {
         "tags": [
-          "WeatherForecast"
+          "OperationLog"
         ],
-        "operationId": "GetWeatherForecast",
+        "operationId": "GetOperationLog",
         "responses": {
           "200": {
             "description": "OK",
             "content": {
               "text/plain": {
                 "schema": {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/components/schemas/WeatherForecast"
-                  }
+                  "$ref": "#/components/schemas/OperationLog"
                 }
               },
               "application/json": {
                 "schema": {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/components/schemas/WeatherForecast"
-                  }
+                  "$ref": "#/components/schemas/OperationLog"
                 }
               },
               "text/json": {
                 "schema": {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/components/schemas/WeatherForecast"
-                  }
+                  "$ref": "#/components/schemas/OperationLog"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/Product": {
+      "get": {
+        "tags": [
+          "Product"
+        ],
+        "operationId": "GetProduct",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/Product"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Product"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Product"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/User/{Name}": {
+      "get": {
+        "tags": [
+          "User"
+        ],
+        "parameters": [
+          {
+            "name": "Name",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/User"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/User"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/User"
                 }
               }
             }
@@ -47,23 +107,74 @@
   },
   "components": {
     "schemas": {
-      "WeatherForecast": {
+      "OperationLog": {
         "type": "object",
         "properties": {
-          "date": {
-            "type": "string",
-            "format": "date"
-          },
-          "temperatureC": {
+          "id": {
             "type": "integer",
             "format": "int32"
           },
-          "temperatureF": {
-            "type": "integer",
-            "format": "int32",
-            "readOnly": true
+          "name": {
+            "type": "string",
+            "nullable": true
           },
-          "summary": {
+          "description": {
+            "type": "string",
+            "nullable": true
+          },
+          "productId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "operationCategory": {
+            "type": "string",
+            "nullable": true
+          },
+          "amount": {
+            "type": "integer",
+            "format": "int32"
+          }
+        },
+        "additionalProperties": false
+      },
+      "Product": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "name": {
+            "type": "string",
+            "nullable": true
+          },
+          "description": {
+            "type": "string",
+            "nullable": true
+          },
+          "amount": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "category": {
+            "type": "integer",
+            "format": "int32"
+          }
+        },
+        "additionalProperties": false
+      },
+      "User": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "login": {
+            "type": "string",
+            "nullable": true
+          },
+          "password": {
             "type": "string",
             "nullable": true
           }
