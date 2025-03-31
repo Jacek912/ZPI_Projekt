@@ -1,3 +1,5 @@
+using wms_api.Database;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
@@ -21,5 +23,7 @@ app.UseHttpsRedirection();
 app.UseAuthorization();
 
 app.MapControllers();
+
+ContextCreator.InitContext();
 
 app.Run();

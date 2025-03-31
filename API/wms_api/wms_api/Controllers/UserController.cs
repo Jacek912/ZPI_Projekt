@@ -1,4 +1,6 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Identity.Data;
+using Microsoft.AspNetCore.Mvc;
+using wms_api.Database;
 
 namespace wms_api.Controllers
 {
@@ -13,22 +15,35 @@ namespace wms_api.Controllers
             _logger = logger;
         }
 
-        [HttpGet("{Name}")]
-        public User Get(string Name)
+        [HttpGet]
+        public IEnumerable<User> Get()
         {
-            return new User
+            var dbContext = ContextCreator.dbContext;
+            if (dbContext == null)
             {
-                Id = 1,
-                Login = Name + Random.Shared.Next(9999),
-                Password = Name + Random.Shared.Next(9999)
-            };
+                return new List<User>();
+            }
+            return dbContext.Users;
         }
 
-        //TODO - db actions
-        //[HttpPost]
+        [HttpPost]
+        public User? Post(string firstName, string lastName)
+        {
+            var dbContext = ContextCreator.dbContext;
+            if (dbContext == null)
+            {
+                return null;
+            }
+            var login = firstName.Substring(0, 3) + lastName.Substring(0, 3) + Random.Shared.Next(999);
+            //TODO - generate password, then MD5 or smth
+            var password = login + "123";
+            var user = new User() { Login = login, Password = password };
+            dbContext.Users.Add(user);
+            dbContext.SaveChanges();
+            return user;
+        }
 
-        //TODO - get by id/login?
-        //[HttpGet("{id}")]
+
 
     }
 }
