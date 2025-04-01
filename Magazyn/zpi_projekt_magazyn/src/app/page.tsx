@@ -1,9 +1,10 @@
-import LoginForm from "@/components/loginForm";
+import Image from "next/image";
+import LoginForm from "@/components/loginPage";
+
+
 
 export default function Home() {
   return (
-    <div className="">
-     <LoginForm/>
-    </div>
+    <LoginForm/>
   );
 }
