@@ -9,41 +9,64 @@ namespace wms_api.Controllers
     public class UserController : ControllerBase
     {
         private readonly ILogger<UserController> _logger;
+        private readonly AppDbContext _dbContext;
 
         public UserController(ILogger<UserController> logger)
         {
             _logger = logger;
-        }
-
-        [HttpGet]
-        public IEnumerable<User> Get()
-        {
             var dbContext = ContextCreator.dbContext;
             if (dbContext == null)
             {
-                return new List<User>();
+                throw new Exception("Null dbcontext!");
             }
-            return dbContext.Users;
+            _dbContext = dbContext;
         }
 
         [HttpPost]
         public User? Post(string firstName, string lastName)
         {
-            var dbContext = ContextCreator.dbContext;
-            if (dbContext == null)
-            {
-                return null;
-            }
             var login = firstName.Substring(0, 3) + lastName.Substring(0, 3) + Random.Shared.Next(999);
             //TODO - generate password, then MD5 or smth
             var password = login + "123";
             var user = new User() { Login = login, Password = password };
-            dbContext.Users.Add(user);
-            dbContext.SaveChanges();
+            _dbContext.Users.Add(user);
+            _dbContext.SaveChanges();
             return user;
         }
 
+        [HttpGet]
+        public IEnumerable<User> Get()
+        {
+            return _dbContext.Users;
+        }
 
+        [HttpPut]
+        public string Put(User user)
+        {
+            var targetUser = _dbContext.Users.FirstOrDefault(x => x.Id == user.Id);
+            if (targetUser == null)
+            {
+                return "No user with id: " + user.Id;
+            }
+            targetUser.Login = user.Login;
+            targetUser.Password = user.Password;
+            _dbContext.Users.Update(targetUser);
+            _dbContext.SaveChanges();
+            return "Updated!";
+        }
+
+        [HttpDelete]
+        public string Delete(int id)
+        {
+            var user = _dbContext.Users.FirstOrDefault(x => x.Id == id);
+            if (user == null)
+            {
+                return "No user with id: " + id;
+            }
+            _dbContext.Users.Remove(user);
+            _dbContext.SaveChanges();
+            return "User " + id + " deleted!";
+        }
 
     }
 }
