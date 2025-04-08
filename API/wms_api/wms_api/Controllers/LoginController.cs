@@ -1,5 +1,9 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.IdentityModel.Tokens;
+using System.IdentityModel.Tokens.Jwt;
+using System.Security.Claims;
+using System.Text;
 using wms_api.Database;
 
 namespace wms_api.Controllers
@@ -38,7 +42,29 @@ namespace wms_api.Controllers
                 return "Error!";
             }
             bool matchingPass = targetUser.Password == password;
-            return matchingPass ? "Ok" : "Error!";
+            if (!matchingPass)
+            {
+                return "Error!";
+            }
+
+            var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("yw5DIAuCQpH7ny4NwT3ALK3uH0e9d82Plm4LVsnT83WTmsNqfj1ON0M/T6WHuXAQ"));
+            var credentials = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
+
+            var claims = new[]
+            {
+                new Claim(JwtRegisteredClaimNames.Sub, targetUser.Id.ToString()),
+                new Claim("login", targetUser.Login == null ? "unknown" : targetUser.Login),
+            };
+
+            var token = new JwtSecurityToken(
+                issuer: "wms_test",
+                audience: "wms_test",
+                claims: claims,
+                expires: DateTime.UtcNow.AddHours(1),
+                signingCredentials: credentials
+            );
+
+            return new JwtSecurityTokenHandler().WriteToken(token);
         }
     }
 }
