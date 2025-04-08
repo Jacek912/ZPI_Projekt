@@ -81,3 +81,7 @@ C:\Users\sqazs\OneDrive\Pulpit\ZPI\ZPI_Projekt\API\wms_api\wms_api\bin\Debug\net
 C:\Users\sqazs\OneDrive\Pulpit\ZPI\ZPI_Projekt\API\wms_api\wms_api\bin\Debug\net8.0\runtimes\win\lib\net6.0\System.Security.Cryptography.ProtectedData.dll
 C:\Users\sqazs\OneDrive\Pulpit\ZPI\ZPI_Projekt\API\wms_api\wms_api\bin\Debug\net8.0\runtimes\win\lib\net6.0\System.Windows.Extensions.dll
 C:\Users\sqazs\OneDrive\Pulpit\ZPI\ZPI_Projekt\API\wms_api\wms_api\bin\Debug\net8.0\Microsoft.AspNetCore.Authentication.JwtBearer.dll
+C:\Users\sqazs\OneDrive\Pulpit\ZPI\ZPI_Projekt\API\wms_api\wms_api\bin\Debug\net8.0\System.Net.Http.Formatting.dll
+C:\Users\sqazs\OneDrive\Pulpit\ZPI\ZPI_Projekt\API\wms_api\wms_api\bin\Debug\net8.0\System.Web.Http.dll
+C:\Users\sqazs\OneDrive\Pulpit\ZPI\ZPI_Projekt\API\wms_api\wms_api\bin\Debug\net8.0\Newtonsoft.Json.dll
+C:\Users\sqazs\OneDrive\Pulpit\ZPI\ZPI_Projekt\API\wms_api\wms_api\bin\Debug\net8.0\Newtonsoft.Json.Bson.dll

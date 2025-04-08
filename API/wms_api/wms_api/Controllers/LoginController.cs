@@ -1,7 +1,7 @@
-﻿using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
+using System.Net;
 using System.Security.Claims;
 using System.Text;
 using wms_api.Database;
@@ -21,12 +21,14 @@ namespace wms_api.Controllers
         }
 
         [HttpGet]
-        public string Login(string username, string password)
+        public ObjectResult Login(string username, string password)
         {
             var dbContext = ContextCreator.dbContext;
             if (dbContext == null)
             {
-                return "Error!";
+                HttpStatusCode statusCode = HttpStatusCode.InternalServerError;
+                var response = new HttpResponseMessage(statusCode);
+                return StatusCode((int)HttpStatusCode.InternalServerError, "db error!");
             }
             User? targetUser = null;
             foreach (var user in dbContext.Users)
@@ -39,12 +41,12 @@ namespace wms_api.Controllers
             }
             if (targetUser == null)
             {
-                return "Error!";
+                return StatusCode((int)HttpStatusCode.InternalServerError, "db error!");
             }
             bool matchingPass = targetUser.Password == password;
             if (!matchingPass)
             {
-                return "Error!";
+                return StatusCode((int)HttpStatusCode.InternalServerError, "Wrong password!");
             }
 
             var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("yw5DIAuCQpH7ny4NwT3ALK3uH0e9d82Plm4LVsnT83WTmsNqfj1ON0M/T6WHuXAQ"));
@@ -64,7 +66,7 @@ namespace wms_api.Controllers
                 signingCredentials: credentials
             );
 
-            return new JwtSecurityTokenHandler().WriteToken(token);
+            return StatusCode((int)HttpStatusCode.OK, new JwtSecurityTokenHandler().WriteToken(token));
         }
     }
 }

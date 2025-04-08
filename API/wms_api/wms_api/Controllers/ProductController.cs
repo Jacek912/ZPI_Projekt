@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using System.Net;
 using wms_api.Database;
 
 namespace wms_api.Controllers
@@ -22,7 +23,7 @@ namespace wms_api.Controllers
         }
 
         [HttpPost]
-        public Product? Post(Product product)
+        public ObjectResult Post(Product product)
         {
             var newProduct = new Product
             {
@@ -33,7 +34,7 @@ namespace wms_api.Controllers
             };
             _dbContext.Products.Add(product);
             _dbContext.SaveChanges();
-            return product;
+            return StatusCode((int)HttpStatusCode.OK, product);
         }
 
         [HttpGet]
@@ -43,12 +44,12 @@ namespace wms_api.Controllers
         }
 
         [HttpPut]
-        public string Put(Product product)
+        public ObjectResult Put(Product product)
         {
             var targetProduct = _dbContext.Products.FirstOrDefault(x => x.Id == product.Id);
             if (targetProduct == null)
             {
-                return "No product with id: " + product.Id;
+                return StatusCode((int)HttpStatusCode.InternalServerError, "No product with id: " + product.Id);
             }
             targetProduct.Name = product.Name;
             targetProduct.Description = product.Description;
@@ -56,20 +57,20 @@ namespace wms_api.Controllers
             targetProduct.Category = product.Category;
             _dbContext.Update(targetProduct);
             _dbContext.SaveChanges();
-            return "Updated!";
+            return StatusCode((int)HttpStatusCode.OK, "Updated!");
         }
 
         [HttpDelete]
-        public string Delete(int id)
+        public ObjectResult Delete(int id)
         {
             var targetProduct = _dbContext.Products.FirstOrDefault(x => x.Id == id);
             if (targetProduct == null)
             {
-                return "No product with id: " + id;
+                return StatusCode((int)HttpStatusCode.InternalServerError, "No product with id: " + id);
             }
             _dbContext.Products.Remove(targetProduct);
             _dbContext.SaveChanges();
-            return "Deleted!";
+            return StatusCode((int)HttpStatusCode.OK, "Deleted!");
         }
     }
 

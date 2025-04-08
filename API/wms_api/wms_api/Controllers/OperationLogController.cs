@@ -1,5 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
+using System.Net;
 using wms_api.Database;
 
 namespace wms_api.Controllers
@@ -23,7 +23,7 @@ namespace wms_api.Controllers
         }
 
         [HttpPost]
-        public OperationLog? Post(OperationLog operationLog)
+        public ObjectResult Post(OperationLog operationLog)
         {
             var newOperationLog = new OperationLog
             {
@@ -35,7 +35,7 @@ namespace wms_api.Controllers
             };
             _dbContext.OperationLogs.Add(newOperationLog);
             _dbContext.SaveChanges();
-            return newOperationLog;
+            return StatusCode((int)HttpStatusCode.OK, newOperationLog);
         }
 
         [HttpGet]
@@ -45,12 +45,12 @@ namespace wms_api.Controllers
         }
 
         [HttpPut]
-        public string Put(OperationLog operationLog)
+        public ObjectResult Put(OperationLog operationLog)
         {
             var targetOperationLog = _dbContext.OperationLogs.FirstOrDefault(x => x.Id == operationLog.Id);
             if (targetOperationLog == null)
             {
-                return "No operation log with id: " + operationLog.Id;
+                return StatusCode((int)HttpStatusCode.InternalServerError, "No operation log with id: " + operationLog.Id);
             }
             targetOperationLog.Name = operationLog.Name;
             targetOperationLog.Description = operationLog.Description;
@@ -59,20 +59,20 @@ namespace wms_api.Controllers
             targetOperationLog.Amount = operationLog.Amount;
             _dbContext.OperationLogs.Update(targetOperationLog);
             _dbContext.SaveChanges();
-            return "Updated!";
+            return StatusCode((int)HttpStatusCode.OK, "Updated!");
         }
 
         [HttpDelete]
-        public string Delete(int id)
+        public ObjectResult Delete(int id)
         {
             var operationLog = _dbContext.OperationLogs.FirstOrDefault(x => x.Id == id);
             if (operationLog == null)
             {
-                return "No operation log with id: " + id;
+                return StatusCode((int)HttpStatusCode.InternalServerError, "No operation log with id: " + id);
             }
             _dbContext.OperationLogs.Remove(operationLog);
             _dbContext.SaveChanges();
-            return "Deleted!";
+            return StatusCode((int)HttpStatusCode.OK, "Deleted!");
         }
     }
 }

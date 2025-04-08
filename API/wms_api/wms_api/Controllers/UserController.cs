@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Identity.Data;
 using Microsoft.AspNetCore.Mvc;
+using System.Net;
 using wms_api.Database;
 
 namespace wms_api.Controllers
@@ -23,7 +24,7 @@ namespace wms_api.Controllers
         }
 
         [HttpPost]
-        public User? Post(string firstName, string lastName)
+        public ObjectResult Post(string firstName, string lastName)
         {
             var login = firstName.Substring(0, 3) + lastName.Substring(0, 3) + Random.Shared.Next(999);
             //TODO - generate password, then MD5 or smth
@@ -31,7 +32,7 @@ namespace wms_api.Controllers
             var user = new User() { Login = login, Password = password };
             _dbContext.Users.Add(user);
             _dbContext.SaveChanges();
-            return user;
+            return StatusCode((int)HttpStatusCode.OK, user);
         }
 
         [HttpGet]
@@ -41,31 +42,31 @@ namespace wms_api.Controllers
         }
 
         [HttpPut]
-        public string Put(User user)
+        public ObjectResult Put(User user)
         {
             var targetUser = _dbContext.Users.FirstOrDefault(x => x.Id == user.Id);
             if (targetUser == null)
             {
-                return "No user with id: " + user.Id;
+                return StatusCode((int)HttpStatusCode.InternalServerError, "No user with id: " + user.Id);
             }
             targetUser.Login = user.Login;
             targetUser.Password = user.Password;
             _dbContext.Users.Update(targetUser);
             _dbContext.SaveChanges();
-            return "Updated!";
+            return StatusCode((int)HttpStatusCode.OK, "Updated!");
         }
 
         [HttpDelete]
-        public string Delete(int id)
+        public ObjectResult Delete(int id)
         {
             var user = _dbContext.Users.FirstOrDefault(x => x.Id == id);
             if (user == null)
             {
-                return "No user with id: " + id;
+                return StatusCode((int)HttpStatusCode.InternalServerError, "No user with id: " + id);
             }
             _dbContext.Users.Remove(user);
             _dbContext.SaveChanges();
-            return "User " + id + " deleted!";
+            return StatusCode((int)HttpStatusCode.OK, "User " + id + " deleted!");
         }
 
     }
