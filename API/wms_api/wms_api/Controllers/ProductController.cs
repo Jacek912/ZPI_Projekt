@@ -38,9 +38,24 @@ namespace wms_api.Controllers
         }
 
         [HttpGet]
-        public IEnumerable<Product> Get()
+        [Route("GetAll/")]
+        public IEnumerable<Product> GetAll()
         {
             return _dbContext.Products;
+        }
+
+        [HttpGet]
+        [Route("GetById/")]
+        public IEnumerable<Product> GetById(int id)
+        {
+            return _dbContext.Products.Where(product => product.Id == id);
+        }
+
+        [HttpGet]
+        [Route("GetByName/")]
+        public IEnumerable<Product> GetByName(string name)
+        {
+            return _dbContext.Products.Where(product => product.Name == name);
         }
 
         [HttpPut]
