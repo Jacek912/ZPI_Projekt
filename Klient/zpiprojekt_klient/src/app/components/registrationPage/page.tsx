@@ -1,26 +1,42 @@
 'use client'
 import React, { useState, useEffect } from "react";
+import axios from "axios";
+import { useRouter } from "next/navigation";
 
 function RegistrationForm() {
     const [firstName, setFirstName] = useState<string>("");
     const [lastName, setLastName] = useState<string>("");
-
+    const router = useRouter();
     
     useEffect(() => {
     }, []);
     
-    const handleSubmit = (e:any) => {
-        e.preventDefault();
-
-        console.log('Registration attempt', { firstName, lastName });
-      };
-
+    const handleRegistration = async (e: React.FormEvent) => {
+      e.preventDefault();
+  
+      try {
+        const response = await axios.post('/api/registration', null, {
+          params: { firstName, lastName },
+        });
+  
+        const token = response.data?.token;
+        if (!token) {
+          throw new Error('No token received');
+        }
+  
+        localStorage.setItem('token', token);
+        router.replace("/components/loginPage");
+      } catch (error) {
+        console.error('Registration failed:', error);
+      }
+    };
+    
       return (
         <div className="grid grid-cols-1 h-screen w-screen place-items-center bg-cover bg-center"
           style={{ backgroundImage: 'url(/Tlo2.webp)' }}>
           <div className="bg-white p-8 rounded-lg shadow-md w-full max-w-sm">
             <h2 className="text-2xl font-semibold text-center mb-6 text-[var(--color-foreground)]">Rejestracja</h2>
-            <form onSubmit={handleSubmit}>
+            <form onSubmit={handleRegistration}>
               <div className="mb-4">
                 <label htmlFor="firstName" className="block text-sm text-gray-600 mb-2">
                   Imie
