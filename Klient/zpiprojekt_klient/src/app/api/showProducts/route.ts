@@ -4,7 +4,7 @@ import https from "https";
 
 export async function GET() {
     try {
-      const response = await axios.get("https://localhost:7060/Product", {
+      const response = await axios.get("https://localhost:7060/Product/GetAll", {
         httpsAgent: new https.Agent({
           rejectUnauthorized: false,
         }),
