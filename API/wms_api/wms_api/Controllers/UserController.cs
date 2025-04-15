@@ -68,7 +68,7 @@ namespace wms_api.Controllers
         }
 
 
-        private String GenerateRandomPassword()
+        private string GenerateRandomPassword()
         {
             string[] charsTab =
             [
