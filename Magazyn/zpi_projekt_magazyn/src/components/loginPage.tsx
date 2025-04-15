@@ -2,7 +2,6 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import Image from "next/image";
-
 import { useRouter } from 'next/navigation';
 
 function LoginForm() {
@@ -10,9 +9,7 @@ function LoginForm() {
     const [password, setPassword] = useState<string>("");
     const [isMounted, setIsMounted] = useState(false);
     const router = useRouter();
-    
 
-    
     useEffect(() => {
         setIsMounted(true);
     }, []);
@@ -20,23 +17,27 @@ function LoginForm() {
     const handleLogin = async (e: React.FormEvent) => {
         e.preventDefault();
         try {
-          const response = await axios.get("/api/login", {
-            params: {
-              username,
-              password,
-            },
-          });
-          
-          console.log(response.data);
-      
-          if (response.status === 200) {
-            router.replace("/dashboard");
-          }
-        } catch (error) {
-          console.error("Login failed:", error);
-        }
-      };
+            const response = await axios.get("/api/login", {
+                params: {
+                    username,
+                    password,
+                },
+            });
 
+            const token = response.data?.token || response.data;
+            if (!token) {
+                throw new Error("No token received");
+            }
+
+
+            localStorage.setItem("token", token);
+
+ 
+            router.replace("/dashboard");
+        } catch (error) {
+            console.error("Login failed:", error);
+        }
+    };
 
     return (
         <div className="grid grid-cols-2 h-screen w-screen place-items-center bg-gray-100">
@@ -52,14 +53,16 @@ function LoginForm() {
                         required
                     />
                     <input
-                        type="Password"
+                        type="password"
                         className="border-solid border border-loginImageColor rounded-lg p-4 text-2xl"
                         value={password}
                         onChange={(e) => setPassword(e.target.value)}
                         placeholder="Hasło"
                         required
                     />
-                    <button className="bg-loginImageColor rounded-lg p-4 text:white mt-5 text-2xl" type="submit">Zaloguj</button>
+                    <button className="bg-loginImageColor rounded-lg p-4 text-white mt-5 text-2xl" type="submit">
+                        Zaloguj
+                    </button>
                 </form>
             </div>
             <div className="bg-loginImageColor w-full h-full place-content-center place-items-center">
@@ -67,8 +70,8 @@ function LoginForm() {
                     src="/loginImage.jpg"
                     width={700}
                     height={700}
-                    alt="Picture of the author"
-                ></Image>
+                    alt="Login Illustration"
+                />
             </div>
         </div>
     );
