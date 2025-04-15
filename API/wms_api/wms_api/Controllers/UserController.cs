@@ -1,5 +1,4 @@
-﻿using Microsoft.AspNetCore.Identity.Data;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using System.Net;
 using wms_api.Database;
 
@@ -27,8 +26,7 @@ namespace wms_api.Controllers
         public ObjectResult Post(string firstName, string lastName)
         {
             var login = firstName.Substring(0, 3) + lastName.Substring(0, 3) + Random.Shared.Next(999);
-            //TODO - generate password, then MD5 or smth
-            var password = login + "123";
+            var password = GenerateRandomPassword();
             var user = new User() { Login = login, Password = password };
             _dbContext.Users.Add(user);
             _dbContext.SaveChanges();
@@ -67,6 +65,34 @@ namespace wms_api.Controllers
             _dbContext.Users.Remove(user);
             _dbContext.SaveChanges();
             return StatusCode((int)HttpStatusCode.OK, "User " + id + " deleted!");
+        }
+
+
+        private String GenerateRandomPassword()
+        {
+            string[] charsTab =
+            [
+                "ABCDEFGHJKLMNOPQRSTUVWXYZ",
+                "abcdefghijkmnopqrstuvwxyz",
+                "0123456789",
+                "!@$?_-"
+            ];
+
+            var rnd = new Random(); 
+            List<char> targetChars = new List<char>();
+
+            foreach (string chars in charsTab)
+            {
+                targetChars.Insert(rnd.Next(0, targetChars.Count), chars[rnd.Next(0, chars.Length)]);
+            }
+
+            for (int i = targetChars.Count; i < 11 || targetChars.Distinct().Count() < 6; i++)
+            {
+                string buff = charsTab[rnd.Next(0, charsTab.Length)];
+                targetChars.Insert(rnd.Next(0, charsTab.Length), buff[rnd.Next(0, buff.Length)]);
+            }
+
+            return new string(targetChars.ToArray());
         }
 
     }
