@@ -32,9 +32,9 @@ namespace wms_api.Controllers
                 Amount = product.Amount,
                 Category = product.Category
             };
-            _dbContext.Products.Add(product);
+            _dbContext.Products.Add(newProduct);
             _dbContext.SaveChanges();
-            return StatusCode((int)HttpStatusCode.OK, product);
+            return StatusCode((int)HttpStatusCode.OK, newProduct);
         }
 
         [HttpGet]

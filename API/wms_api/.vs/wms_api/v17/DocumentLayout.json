@@ -3,20 +3,28 @@
   "WorkspaceRootPath": "C:\\Users\\sqazs\\OneDrive\\Pulpit\\ZPI\\ZPI_Projekt\\API\\wms_api\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{7B56627C-9530-4F09-9F7D-42E06DD55E41}|wms_api\\wms_api.csproj|c:\\users\\sqazs\\onedrive\\pulpit\\zpi\\zpi_projekt\\api\\wms_api\\wms_api\\controllers\\usercontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{7B56627C-9530-4F09-9F7D-42E06DD55E41}|wms_api\\wms_api.csproj|solutionrelative:wms_api\\controllers\\usercontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{7B56627C-9530-4F09-9F7D-42E06DD55E41}|wms_api\\wms_api.csproj|c:\\users\\sqazs\\onedrive\\pulpit\\zpi\\zpi_projekt\\api\\wms_api\\wms_api\\product.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{7B56627C-9530-4F09-9F7D-42E06DD55E41}|wms_api\\wms_api.csproj|solutionrelative:wms_api\\product.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{7B56627C-9530-4F09-9F7D-42E06DD55E41}|wms_api\\wms_api.csproj|c:\\users\\sqazs\\onedrive\\pulpit\\zpi\\zpi_projekt\\api\\wms_api\\wms_api\\controllers\\operationlogcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{7B56627C-9530-4F09-9F7D-42E06DD55E41}|wms_api\\wms_api.csproj|solutionrelative:wms_api\\controllers\\operationlogcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{7B56627C-9530-4F09-9F7D-42E06DD55E41}|wms_api\\wms_api.csproj|c:\\users\\sqazs\\onedrive\\pulpit\\zpi\\zpi_projekt\\api\\wms_api\\wms_api\\user.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{7B56627C-9530-4F09-9F7D-42E06DD55E41}|wms_api\\wms_api.csproj|solutionrelative:wms_api\\user.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{7B56627C-9530-4F09-9F7D-42E06DD55E41}|wms_api\\wms_api.csproj|c:\\users\\sqazs\\onedrive\\pulpit\\zpi\\zpi_projekt\\api\\wms_api\\wms_api\\controllers\\productcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{7B56627C-9530-4F09-9F7D-42E06DD55E41}|wms_api\\wms_api.csproj|solutionrelative:wms_api\\controllers\\productcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{7B56627C-9530-4F09-9F7D-42E06DD55E41}|wms_api\\wms_api.csproj|c:\\users\\sqazs\\onedrive\\pulpit\\zpi\\zpi_projekt\\api\\wms_api\\wms_api\\controllers\\usercontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{7B56627C-9530-4F09-9F7D-42E06DD55E41}|wms_api\\wms_api.csproj|solutionrelative:wms_api\\controllers\\usercontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{7B56627C-9530-4F09-9F7D-42E06DD55E41}|wms_api\\wms_api.csproj|c:\\users\\sqazs\\onedrive\\pulpit\\zpi\\zpi_projekt\\api\\wms_api\\wms_api\\controllers\\logincontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{7B56627C-9530-4F09-9F7D-42E06DD55E41}|wms_api\\wms_api.csproj|solutionrelative:wms_api\\controllers\\logincontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{7B56627C-9530-4F09-9F7D-42E06DD55E41}|wms_api\\wms_api.csproj|c:\\users\\sqazs\\onedrive\\pulpit\\zpi\\zpi_projekt\\api\\wms_api\\wms_api\\user.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{7B56627C-9530-4F09-9F7D-42E06DD55E41}|wms_api\\wms_api.csproj|solutionrelative:wms_api\\user.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{7B56627C-9530-4F09-9F7D-42E06DD55E41}|wms_api\\wms_api.csproj|c:\\users\\sqazs\\onedrive\\pulpit\\zpi\\zpi_projekt\\api\\wms_api\\wms_api\\database\\contextcreator.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
@@ -27,16 +35,8 @@
       "RelativeMoniker": "D:0:0:{7B56627C-9530-4F09-9F7D-42E06DD55E41}|wms_api\\wms_api.csproj|solutionrelative:wms_api\\database\\appdbcontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{7B56627C-9530-4F09-9F7D-42E06DD55E41}|wms_api\\wms_api.csproj|c:\\users\\sqazs\\onedrive\\pulpit\\zpi\\zpi_projekt\\api\\wms_api\\wms_api\\controllers\\productcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{7B56627C-9530-4F09-9F7D-42E06DD55E41}|wms_api\\wms_api.csproj|solutionrelative:wms_api\\controllers\\productcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
       "AbsoluteMoniker": "D:0:0:{7B56627C-9530-4F09-9F7D-42E06DD55E41}|wms_api\\wms_api.csproj|c:\\users\\sqazs\\onedrive\\pulpit\\zpi\\zpi_projekt\\api\\wms_api\\wms_api\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{7B56627C-9530-4F09-9F7D-42E06DD55E41}|wms_api\\wms_api.csproj|solutionrelative:wms_api\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{7B56627C-9530-4F09-9F7D-42E06DD55E41}|wms_api\\wms_api.csproj|c:\\users\\sqazs\\onedrive\\pulpit\\zpi\\zpi_projekt\\api\\wms_api\\wms_api\\product.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{7B56627C-9530-4F09-9F7D-42E06DD55E41}|wms_api\\wms_api.csproj|solutionrelative:wms_api\\product.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{7B56627C-9530-4F09-9F7D-42E06DD55E41}|wms_api\\wms_api.csproj|c:\\users\\sqazs\\onedrive\\pulpit\\zpi\\zpi_projekt\\api\\wms_api\\wms_api\\operationlog.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
@@ -73,8 +73,12 @@
               "Name": "ST:128:0:{1fc202d4-d401-403c-9834-5b218574bb67}"
             },
             {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{cce594b6-0c39-4442-ba28-10c64ac7e89f}"
+            },
+            {
               "$type": "Document",
-              "DocumentIndex": 3,
+              "DocumentIndex": 4,
               "Title": "LoginController.cs",
               "DocumentMoniker": "C:\\Users\\sqazs\\OneDrive\\Pulpit\\ZPI\\ZPI_Projekt\\API\\wms_api\\wms_api\\Controllers\\LoginController.cs",
               "RelativeDocumentMoniker": "wms_api\\Controllers\\LoginController.cs",
@@ -87,7 +91,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 4,
+              "DocumentIndex": 6,
               "Title": "ContextCreator.cs",
               "DocumentMoniker": "C:\\Users\\sqazs\\OneDrive\\Pulpit\\ZPI\\ZPI_Projekt\\API\\wms_api\\wms_api\\Database\\ContextCreator.cs",
               "RelativeDocumentMoniker": "wms_api\\Database\\ContextCreator.cs",
@@ -95,12 +99,11 @@
               "RelativeToolTip": "wms_api\\Database\\ContextCreator.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAwAAAABAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-03-31T19:31:32.399Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-03-31T19:31:32.399Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 5,
+              "DocumentIndex": 7,
               "Title": "AppDbContext.cs",
               "DocumentMoniker": "C:\\Users\\sqazs\\OneDrive\\Pulpit\\ZPI\\ZPI_Projekt\\API\\wms_api\\wms_api\\Database\\AppDbContext.cs",
               "RelativeDocumentMoniker": "wms_api\\Database\\AppDbContext.cs",
@@ -108,12 +111,11 @@
               "RelativeToolTip": "wms_api\\Database\\AppDbContext.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAsAAAAJAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-03-31T19:27:01.35Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-03-31T19:27:01.35Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 2,
+              "DocumentIndex": 5,
               "Title": "User.cs",
               "DocumentMoniker": "C:\\Users\\sqazs\\OneDrive\\Pulpit\\ZPI\\ZPI_Projekt\\API\\wms_api\\wms_api\\User.cs",
               "RelativeDocumentMoniker": "wms_api\\User.cs",
@@ -121,12 +123,11 @@
               "RelativeToolTip": "wms_api\\User.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAsAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-03-30T15:34:50.447Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-03-30T15:34:50.447Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 7,
+              "DocumentIndex": 8,
               "Title": "Program.cs",
               "DocumentMoniker": "C:\\Users\\sqazs\\OneDrive\\Pulpit\\ZPI\\ZPI_Projekt\\API\\wms_api\\wms_api\\Program.cs",
               "RelativeDocumentMoniker": "wms_api\\Program.cs",
@@ -134,31 +135,30 @@
               "RelativeToolTip": "wms_api\\Program.cs",
               "ViewState": "AgIAAAMAAAAAAAAAAIBJwBgAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-03-30T15:20:14.643Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-03-30T15:20:14.643Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 6,
+              "DocumentIndex": 2,
               "Title": "ProductController.cs",
               "DocumentMoniker": "C:\\Users\\sqazs\\OneDrive\\Pulpit\\ZPI\\ZPI_Projekt\\API\\wms_api\\wms_api\\Controllers\\ProductController.cs",
               "RelativeDocumentMoniker": "wms_api\\Controllers\\ProductController.cs",
               "ToolTip": "C:\\Users\\sqazs\\OneDrive\\Pulpit\\ZPI\\ZPI_Projekt\\API\\wms_api\\wms_api\\Controllers\\ProductController.cs",
               "RelativeToolTip": "wms_api\\Controllers\\ProductController.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAEgAAABCAAAAAAAAAA==",
+              "ViewState": "AgIAAA0AAAAAAAAAAAAzwBsAAAAmAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-03-30T16:07:47.176Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 0,
+              "DocumentIndex": 3,
               "Title": "UserController.cs",
               "DocumentMoniker": "C:\\Users\\sqazs\\OneDrive\\Pulpit\\ZPI\\ZPI_Projekt\\API\\wms_api\\wms_api\\Controllers\\UserController.cs",
               "RelativeDocumentMoniker": "wms_api\\Controllers\\UserController.cs",
               "ToolTip": "C:\\Users\\sqazs\\OneDrive\\Pulpit\\ZPI\\ZPI_Projekt\\API\\wms_api\\wms_api\\Controllers\\UserController.cs",
               "RelativeToolTip": "wms_api\\Controllers\\UserController.cs",
-              "ViewState": "AgIAAA0AAAAAAAAAAAAzwBsAAABnAAAAAAAAAA==",
+              "ViewState": "AgIAAA0AAAAAAAAAAAAzwFYAAAANAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-03-30T15:36:50.417Z",
               "EditorCaption": ""
@@ -173,8 +173,7 @@
               "RelativeToolTip": "wms_api\\appsettings.json",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAkAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
-              "WhenOpened": "2025-03-30T15:45:36.849Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-03-30T15:45:36.849Z"
             },
             {
               "$type": "Document",
@@ -186,22 +185,17 @@
               "RelativeToolTip": "wms_api\\appsettings.Development.json",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
-              "WhenOpened": "2025-03-30T15:45:38.453Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Bookmark",
-              "Name": "ST:0:0:{cce594b6-0c39-4442-ba28-10c64ac7e89f}"
+              "WhenOpened": "2025-03-30T15:45:38.453Z"
             }
           ]
         },
         {
           "DockedWidth": 159,
-          "SelectedChildIndex": 1,
+          "SelectedChildIndex": 0,
           "Children": [
             {
               "$type": "Document",
-              "DocumentIndex": 8,
+              "DocumentIndex": 0,
               "Title": "Product.cs",
               "DocumentMoniker": "C:\\Users\\sqazs\\OneDrive\\Pulpit\\ZPI\\ZPI_Projekt\\API\\wms_api\\wms_api\\Product.cs",
               "RelativeDocumentMoniker": "wms_api\\Product.cs",
@@ -220,7 +214,7 @@
               "RelativeDocumentMoniker": "wms_api\\Controllers\\OperationLogController.cs",
               "ToolTip": "C:\\Users\\sqazs\\OneDrive\\Pulpit\\ZPI\\ZPI_Projekt\\API\\wms_api\\wms_api\\Controllers\\OperationLogController.cs",
               "RelativeToolTip": "wms_api\\Controllers\\OperationLogController.cs",
-              "ViewState": "AgIAABEAAAAAAAAAAAAQwEUAAAANAAAAAAAAAA==",
+              "ViewState": "AgIAAB8AAAAAAAAAAAAYwDoAAAAaAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-03-30T16:16:40.331Z",
               "EditorCaption": ""
@@ -235,8 +229,7 @@
               "RelativeToolTip": "wms_api\\OperationLog.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAA8AAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-03-30T16:14:11.904Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-03-30T16:14:11.904Z"
             },
             {
               "$type": "Document",
@@ -248,8 +241,7 @@
               "RelativeToolTip": "wms_api\\Properties\\launchSettings.json",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
-              "WhenOpened": "2025-03-30T15:42:19.122Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-03-30T15:42:19.122Z"
             },
             {
               "$type": "Document",
@@ -261,8 +253,7 @@
               "RelativeToolTip": "wms_api\\wms_api.http",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003502|",
-              "WhenOpened": "2025-03-30T15:42:33.573Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-03-30T15:42:33.573Z"
             }
           ]
         }
