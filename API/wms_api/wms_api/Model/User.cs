@@ -1,4 +1,4 @@
-﻿namespace wms_api
+﻿namespace wms_api.Model
 {
     using System.ComponentModel.DataAnnotations;
     public class User

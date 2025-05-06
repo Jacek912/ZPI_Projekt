@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using System.Net;
 using wms_api.Database;
+using wms_api.Model;
 
 namespace wms_api.Controllers
 {

@@ -30,7 +30,7 @@
     "Parameters": [
       {
         "Name": "operationLog",
-        "Type": "wms_api.OperationLog",
+        "Type": "wms_api.Model.OperationLog",
         "IsRequired": true
       }
     ],
@@ -46,7 +46,7 @@
     "Parameters": [],
     "ReturnTypes": [
       {
-        "Type": "System.Collections.Generic.IEnumerable\u00601[[wms_api.OperationLog, wms_api, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+        "Type": "System.Collections.Generic.IEnumerable\u00601[[wms_api.Model.OperationLog, wms_api, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
         "MediaTypes": [
           "text/plain",
           "application/json",
@@ -66,7 +66,7 @@
     "Parameters": [
       {
         "Name": "operationLog",
-        "Type": "wms_api.OperationLog",
+        "Type": "wms_api.Model.OperationLog",
         "IsRequired": true
       }
     ],
@@ -98,7 +98,7 @@
     "Parameters": [
       {
         "Name": "product",
-        "Type": "wms_api.Product",
+        "Type": "wms_api.Model.Product",
         "IsRequired": true
       }
     ],
@@ -114,7 +114,7 @@
     "Parameters": [
       {
         "Name": "product",
-        "Type": "wms_api.Product",
+        "Type": "wms_api.Model.Product",
         "IsRequired": true
       }
     ],
@@ -146,7 +146,7 @@
     "Parameters": [],
     "ReturnTypes": [
       {
-        "Type": "System.Collections.Generic.IEnumerable\u00601[[wms_api.Product, wms_api, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+        "Type": "System.Collections.Generic.IEnumerable\u00601[[wms_api.Model.Product, wms_api, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
         "MediaTypes": [
           "text/plain",
           "application/json",
@@ -172,7 +172,7 @@
     ],
     "ReturnTypes": [
       {
-        "Type": "System.Collections.Generic.IEnumerable\u00601[[wms_api.Product, wms_api, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+        "Type": "System.Collections.Generic.IEnumerable\u00601[[wms_api.Model.Product, wms_api, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
         "MediaTypes": [
           "text/plain",
           "application/json",
@@ -198,7 +198,7 @@
     ],
     "ReturnTypes": [
       {
-        "Type": "System.Collections.Generic.IEnumerable\u00601[[wms_api.Product, wms_api, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+        "Type": "System.Collections.Generic.IEnumerable\u00601[[wms_api.Model.Product, wms_api, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
         "MediaTypes": [
           "text/plain",
           "application/json",
@@ -218,7 +218,7 @@
     "Parameters": [
       {
         "Name": "productCategory",
-        "Type": "wms_api.ProductCategory",
+        "Type": "wms_api.Model.ProductCategory",
         "IsRequired": true
       }
     ],
@@ -234,7 +234,7 @@
     "Parameters": [],
     "ReturnTypes": [
       {
-        "Type": "System.Collections.Generic.IEnumerable\u00601[[wms_api.ProductCategory, wms_api, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+        "Type": "System.Collections.Generic.IEnumerable\u00601[[wms_api.Model.ProductCategory, wms_api, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
         "MediaTypes": [
           "text/plain",
           "application/json",
@@ -254,7 +254,7 @@
     "Parameters": [
       {
         "Name": "productCategory",
-        "Type": "wms_api.ProductCategory",
+        "Type": "wms_api.Model.ProductCategory",
         "IsRequired": true
       }
     ],
@@ -307,7 +307,7 @@
     "Parameters": [],
     "ReturnTypes": [
       {
-        "Type": "System.Collections.Generic.IEnumerable\u00601[[wms_api.User, wms_api, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+        "Type": "System.Collections.Generic.IEnumerable\u00601[[wms_api.Model.User, wms_api, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
         "MediaTypes": [
           "text/plain",
           "application/json",
@@ -327,7 +327,7 @@
     "Parameters": [
       {
         "Name": "user",
-        "Type": "wms_api.User",
+        "Type": "wms_api.Model.User",
         "IsRequired": true
       }
     ],

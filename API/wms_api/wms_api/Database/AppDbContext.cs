@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using wms_api.Model;
 
 namespace wms_api.Database
 {

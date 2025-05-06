@@ -5,6 +5,7 @@ using System.Net;
 using System.Security.Claims;
 using System.Text;
 using wms_api.Database;
+using wms_api.Model;
 
 namespace wms_api.Controllers
 {
