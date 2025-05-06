@@ -31,7 +31,7 @@ namespace wms_api.Controllers
                 Name = product.Name,
                 Description = product.Description,
                 Amount = product.Amount,
-                Category = product.Category
+                Category = product.Category,
             };
             _dbContext.Products.Add(newProduct);
             _dbContext.SaveChanges();
@@ -57,6 +57,26 @@ namespace wms_api.Controllers
         public IEnumerable<Product> GetByName(string name)
         {
             return _dbContext.Products.Where(product => product.Name == name);
+        }
+
+        [HttpGet]
+        [Route("GetStorageLocationsByProductId/")]
+        public IEnumerable<StorageLocation> GetStorageLocationsByProductId(int productId)
+        {
+            List<StorageLocationProduct> storageLocations = _dbContext.StorageLocationProducts
+                .Where(x => x.ProductId == productId)
+                .ToList();
+            List<StorageLocation> targetStorageLocations = new List<StorageLocation> ();
+            foreach (StorageLocationProduct storageLocationProduct in storageLocations)
+            {
+                StorageLocation? storageLocation = _dbContext.StorageLocations
+                    .FirstOrDefault(x => x.Id == storageLocationProduct.StorageLocationId);
+                if (storageLocation != null)
+                {
+                    targetStorageLocations.Add(storageLocation);
+                }
+            }
+            return targetStorageLocations;
         }
 
         [HttpPut]
