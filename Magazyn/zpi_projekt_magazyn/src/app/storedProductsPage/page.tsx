@@ -2,6 +2,7 @@
 
 import { useState } from 'react';
 import axios from 'axios';
+import useAuthRedirect from "@/hooks/useAuthRedirect";
 
 interface Product {
   id: number;
@@ -10,6 +11,7 @@ interface Product {
 }
 
 export default function ProductPage() {
+  useAuthRedirect();
   const [products, setProducts] = useState<Product[]>([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);

@@ -3,7 +3,7 @@ import { NextResponse } from "next/server";
 export async function GET() {
     try {
         process.env.NODE_TLS_REJECT_UNAUTHORIZED = "0";
-const response = await fetch("https://localhost:7060/Product"); if (!response.ok) {
+const response = await fetch("https://localhost:7060/Product/GetAll"); if (!response.ok) {
             const text = await response.text();
             console.error("❌ Błąd z backendu:", response.status, text);
             return NextResponse.json(

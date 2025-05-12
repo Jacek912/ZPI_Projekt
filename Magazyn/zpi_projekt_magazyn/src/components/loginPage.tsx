@@ -33,7 +33,7 @@ function LoginForm() {
             localStorage.setItem("token", token);
 
  
-            router.replace("/dashboard");
+            router.replace("/sotoredProducts");
         } catch (error) {
             console.error("Login failed:", error);
         }
