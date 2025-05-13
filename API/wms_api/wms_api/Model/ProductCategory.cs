@@ -12,5 +12,16 @@
         public double? Weight { get; set; }
         public double? MaxSize { get; set; }
 
+        public string GetPack()
+        {
+            return "Id: " + Id + ", " +
+                   "Name: " + Name + ", " +
+                   "Desc: " + Description + ", " +
+                   "MinPrice: " + MinPrice + ", " +
+                   "MaxPrice: " + MaxPrice + ", " +
+                   "Weight: " + Weight + ", " +
+                   "MaxSize: " + MaxSize;
+        }
+
     }
 }

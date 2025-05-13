@@ -1,5 +1,8 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using System.Net;
+using System.Runtime.Intrinsics.Arm;
+using System.Security.Cryptography;
+using System.Text;
 using wms_api.Database;
 using wms_api.Model;
 
@@ -26,17 +29,25 @@ namespace wms_api.Controllers
         [HttpPost]
         public ObjectResult Post(string firstName, string lastName)
         {
-            var login = firstName.Substring(0, 3) + lastName.Substring(0, 3) + Random.Shared.Next(999);
+            var login = firstName.Substring(0, 3) + lastName.Substring(0, 3) + Random.Shared.Next(9999);
             var password = GenerateRandomPassword();
-            var user = new User() { Login = login, Password = password };
+
+            var user = new User() { Login = login, Password = Encrypt(password) };
             _dbContext.Users.Add(user);
             _dbContext.SaveChanges();
-            return StatusCode((int)HttpStatusCode.OK, user);
+            SaveOperationLog("UserController_POST", user.GetPack());
+            var userCopy = new User()
+            {
+                Login = user.Login,
+                Password = password
+            };
+            return StatusCode((int)HttpStatusCode.OK, userCopy);
         }
 
         [HttpGet]
         public IEnumerable<User> Get()
         {
+            SaveOperationLog("UserController_GET", "All");
             return _dbContext.Users;
         }
 
@@ -52,6 +63,7 @@ namespace wms_api.Controllers
             targetUser.Password = user.Password;
             _dbContext.Users.Update(targetUser);
             _dbContext.SaveChanges();
+            SaveOperationLog("UserController_PUT", targetUser.GetPack());
             return StatusCode((int)HttpStatusCode.OK, "Updated!");
         }
 
@@ -65,6 +77,7 @@ namespace wms_api.Controllers
             }
             _dbContext.Users.Remove(user);
             _dbContext.SaveChanges();
+            SaveOperationLog("UserController_DELETE", user.GetPack());
             return StatusCode((int)HttpStatusCode.OK, "User " + id + " deleted!");
         }
 
@@ -94,6 +107,23 @@ namespace wms_api.Controllers
             }
 
             return new string(targetChars.ToArray());
+        }
+
+        private string Encrypt(string pass)
+        {
+            UTF8Encoding utf8Encoding = new UTF8Encoding();
+            SHA256 sha256 = SHA256.Create();
+            return Convert.ToBase64String(sha256.ComputeHash(utf8Encoding.GetBytes(pass)));
+
+        }
+
+        private void SaveOperationLog(string name, string description)
+        {
+            OperationLog log = new OperationLog();
+            log.Name = name;
+            log.Description = description;
+            _dbContext.OperationLogs.Add(log);
+            _dbContext.SaveChanges();
         }
 
     }

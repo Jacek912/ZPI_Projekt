@@ -9,5 +9,11 @@
         public int StorageLocationId { get; set; }
         [Key, Column(Order = 1)]
         public int ProductId { get; set; }
+
+        public string GetPack()
+        {
+            return "StorageLocationId: " + StorageLocationId +
+                ", ProductId: " + ProductId;
+        }
     }
 }

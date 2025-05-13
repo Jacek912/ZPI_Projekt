@@ -34,6 +34,7 @@ namespace wms_api.Controllers
             };
             _dbContext.StorageLocations.Add(newStorageLocation);
             _dbContext.SaveChanges();
+            SaveOperationLog("StorageLocationController_POST", newStorageLocation.GetPack());
             return StatusCode((int)HttpStatusCode.OK, newStorageLocation);
         }
 
@@ -95,6 +96,7 @@ namespace wms_api.Controllers
             targetStorageLocation.Description = location.Description;
             _dbContext.Update(targetStorageLocation);
             _dbContext.SaveChanges();
+            SaveOperationLog("StorageLocationController_UPDATELOCATION", targetStorageLocation.GetPack());
             return StatusCode((int)HttpStatusCode.OK, "Updated!");
         }
 
@@ -124,6 +126,7 @@ namespace wms_api.Controllers
             _dbContext.StorageLocationProducts.Add(storageLocationProduct);
             _dbContext.Update(targetStorageLocation);
             _dbContext.SaveChanges();
+            SaveOperationLog("StorageLocationController_ADDPRODUCT", targetStorageLocation.GetPack() + "\n" + storageLocationProduct.GetPack());
             return StatusCode((int)HttpStatusCode.OK, "Updated!");
         }
 
@@ -146,6 +149,7 @@ namespace wms_api.Controllers
             _dbContext.StorageLocationProducts.Remove(targetStorageLocationProduct);
             _dbContext.Update(targetStorageLocation);
             _dbContext.SaveChanges();
+            SaveOperationLog("StorageLocationController_REMOVEPRODUCT", targetStorageLocation.GetPack() + "\n" + targetStorageLocationProduct.GetPack());
             return StatusCode((int)HttpStatusCode.OK, "Updated!");
         }
 
@@ -163,7 +167,17 @@ namespace wms_api.Controllers
             _dbContext.StorageLocationProducts.RemoveRange(targetStorageLocationProducts);
             _dbContext.StorageLocations.Remove(targetStorageLocation);
             _dbContext.SaveChanges();
+            SaveOperationLog("StorageLocationController_DELETE", targetStorageLocation.GetPack());
             return StatusCode((int)HttpStatusCode.OK, "Deleted!");
+        }
+
+        private void SaveOperationLog(string name, string description)
+        {
+            OperationLog log = new OperationLog();
+            log.Name = name;
+            log.Description = description;
+            _dbContext.OperationLogs.Add(log);
+            _dbContext.SaveChanges();
         }
     }
 }

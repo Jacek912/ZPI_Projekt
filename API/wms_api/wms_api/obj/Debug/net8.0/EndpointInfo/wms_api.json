@@ -362,6 +362,54 @@
         }
       }
     },
+    "/Product/GetByBarCode": {
+      "get": {
+        "tags": [
+          "Product"
+        ],
+        "parameters": [
+          {
+            "name": "barCode",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Product"
+                  }
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Product"
+                  }
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Product"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/Product/GetStorageLocationsByProductId": {
       "get": {
         "tags": [
@@ -999,6 +1047,11 @@
             "type": "integer",
             "format": "int32",
             "nullable": true
+          },
+          "createdDate": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
           }
         },
         "additionalProperties": false
@@ -1024,6 +1077,21 @@
             "nullable": true
           },
           "category": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "barCode": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "minAmount": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "maxAmount": {
             "type": "integer",
             "format": "int32",
             "nullable": true

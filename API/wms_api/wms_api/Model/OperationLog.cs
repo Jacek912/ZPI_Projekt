@@ -10,6 +10,7 @@
         public int? ProductId { get; set; }
         public string? OperationCategory { get; set; }
         public int? Amount { get; set; }
+        public DateTime? CreatedDate { get; set; } = DateTime.Now;
 
     }
 }

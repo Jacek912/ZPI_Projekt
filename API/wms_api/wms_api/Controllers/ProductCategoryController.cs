@@ -37,6 +37,7 @@ namespace wms_api.Controllers
             };
             _dbContext.ProductCategories.Add(newProductCategory);
             _dbContext.SaveChanges();
+            SaveOperationLog("ProductCategoryController_POST", newProductCategory.GetPack());
             return StatusCode((int)HttpStatusCode.OK, newProductCategory);
         }
 
@@ -62,6 +63,7 @@ namespace wms_api.Controllers
             targetProductCategory.MaxSize = productCategory.MaxSize;
             _dbContext.ProductCategories.Update(targetProductCategory);
             _dbContext.SaveChanges();
+            SaveOperationLog("ProductCategoryController_PUT", targetProductCategory.GetPack());
             return StatusCode((int)HttpStatusCode.OK, "Updated!");
         }
 
@@ -75,7 +77,17 @@ namespace wms_api.Controllers
             }
             _dbContext.ProductCategories.Remove(productCategory);
             _dbContext.SaveChanges();
+            SaveOperationLog("ProductCategoryController_DELETE", productCategory.GetPack());
             return StatusCode((int)HttpStatusCode.OK, "Deleted!");
+        }
+
+        private void SaveOperationLog(string name, string description)
+        {
+            OperationLog log = new OperationLog();
+            log.Name = name;
+            log.Description = description;
+            _dbContext.OperationLogs.Add(log);
+            _dbContext.SaveChanges();
         }
 
     }
