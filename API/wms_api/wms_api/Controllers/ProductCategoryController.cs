@@ -42,9 +42,17 @@ namespace wms_api.Controllers
         }
 
         [HttpGet]
-        public IEnumerable<ProductCategory> Get()
+        [Route("GetAll/")]
+        public IEnumerable<ProductCategory> GetAll()
         {
             return _dbContext.ProductCategories;
+        }
+
+        [HttpGet]
+        [Route("GetById/")]
+        public IEnumerable<ProductCategory> GetById(int id)
+        {
+            return _dbContext.ProductCategories.Where(category => category.Id == id);
         }
 
         [HttpPut]
