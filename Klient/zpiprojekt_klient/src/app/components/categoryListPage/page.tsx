@@ -2,6 +2,7 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import Link from "next/link";
+import useAuthRedirect from "@/app/hooks/useAuthRedirect";
 
 interface Category {
   id: number;
@@ -14,6 +15,7 @@ interface Category {
 }
 
 function CategoryList() {
+  useAuthRedirect(); 
   const [categories, setCategories] = useState<Category[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
@@ -188,6 +190,10 @@ function CategoryList() {
               <p className="text-gray-600 mt-1">ID: {categoryDetails.id}</p>
               <p className="text-gray-600 mt-1">Nazwa: {categoryDetails.name}</p>
               <p className="text-gray-600 mt-1">Opis: {categoryDetails.description}</p>
+                            <p className="text-gray-600 mt-1">Minimalna cena(zł): {categoryDetails.minPrice ?? "Brak"}</p>
+              <p className="text-gray-600 mt-1">Maksymalna cena(zł): {categoryDetails.maxPrice ?? "Brak"}</p>
+              <p className="text-gray-600 mt-1">Waga(kg): {categoryDetails.weight ?? "Brak"}</p>
+              <p className="text-gray-600 mt-1">Maksymalny rozmiar(cm): {categoryDetails.maxSize ?? "Brak"}</p>
               <button
                 onClick={() => setCategoryDetails(null)} // Zamknięcie szczegółów
                 className="mt-4 bg-gray-500 text-white px-4 py-2 rounded hover:bg-gray-600"
@@ -223,7 +229,7 @@ function CategoryList() {
                 />
               </div>
               <div className="mb-4">
-                <label className="block text-gray-700">Cena minimalna</label>
+                <label className="block text-gray-700">Cena minimalna(zł)</label>
                 <input
                   type="number"
                   name="minPrice"
@@ -233,7 +239,7 @@ function CategoryList() {
                 />
               </div>
               <div className="mb-4">
-                <label className="block text-gray-700">Cena maksymalna</label>
+                <label className="block text-gray-700">Cena maksymalna(zł)</label>
                 <input
                   type="number"
                   name="maxPrice"
@@ -243,7 +249,7 @@ function CategoryList() {
                 />
               </div>
               <div className="mb-4">
-                <label className="block text-gray-700">Waga</label>
+                <label className="block text-gray-700">Waga(kg)</label>
                 <input
                   type="number"
                   name="weight"
@@ -253,7 +259,7 @@ function CategoryList() {
                 />
               </div>
               <div className="mb-4">
-                <label className="block text-gray-700">Maksymalny rozmiar</label>
+                <label className="block text-gray-700">Maksymalny rozmiar(cm)</label>
                 <input
                   type="number"
                   name="maxSize"

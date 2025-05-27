@@ -15,17 +15,21 @@ export async function POST(req: NextRequest) {
   try {
     const response = await axios.post(
       "https://localhost:7060/User",
-      {}, 
+      {},
       {
         params: { firstName, lastName },
         httpsAgent: new https.Agent({ rejectUnauthorized: false }),
       }
     );
 
-    return NextResponse.json({ token: response.data }, { status: 200 });
+    const { login, password, id } = response.data;
+
+    const token = "example_token"; 
+
+    return NextResponse.json({ token, login, password }, { status: 200 });
 
   } catch (error: any) {
-    console.error("Login proxy error:", error.message);
-    return NextResponse.json({ error: "Login failed (proxy)" }, { status: 500 });
+    console.error("Registration proxy error:", error.message);
+    return NextResponse.json({ error: "Registration failed (proxy)" }, { status: 500 });
   }
 }

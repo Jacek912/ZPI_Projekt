@@ -2,6 +2,7 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import Link from "next/link";
+import useAuthRedirect from "@/app/hooks/useAuthRedirect";
 
 interface Product {
   id: number;
@@ -14,7 +15,23 @@ interface Product {
   maxAmount: number;
 }
 
+interface Category {
+  id: number;
+  name: string;
+}
+
+interface CategoryDetails {
+  id: number;
+  name: string;
+  description: string;
+  minPrice: number | null;
+  maxPrice: number | null;
+  weight: number | null;
+  maxSize: number | null;
+}
+
 function ProductList() {
+  useAuthRedirect();
   const [products, setProducts] = useState<Product[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
@@ -27,23 +44,28 @@ function ProductList() {
   const [searchedProductByName, setSearchedProductByName] = useState<any | null>(null);
   const [searchErrorId, setSearchErrorId] = useState<string | null>(null);
   const [searchErrorName, setSearchErrorName] = useState<string | null>(null);
+  const [categories, setCategories] = useState<Category[]>([]);
+  const [categoryDetails, setCategoryDetails] = useState<CategoryDetails | null>(null);
 
+useEffect(() => {
+  const fetchProductsAndCategories = async () => {
+    try {
+      const [productRes, categoryRes] = await Promise.all([
+        axios.get("/api/showProducts"),
+        axios.get("/api/showCategories")
+      ]);
 
-  useEffect(() => {
-    const fetchProducts = async () => {
-      try {
-        const response = await axios.get("/api/showProducts");
-        setProducts(response.data);
-        setLoading(false);
-      } catch (error) {
-        console.error("Error fetching products:", error);
-        setError("Wystąpił błąd podczas pobierania produktów.");
-        setLoading(false);
-      }
-    };
-
-    fetchProducts();
-  }, []);
+      setProducts(productRes.data);
+      setCategories(categoryRes.data);
+      setLoading(false);
+    } catch (error) {
+      console.error("Błąd podczas pobierania danych:", error);
+      setError("Wystąpił błąd podczas ładowania danych.");
+      setLoading(false);
+    }
+  };
+  fetchProductsAndCategories();
+}, []);
 
   const handleEditClick = (product: Product) => {
     setEditingProduct(product);
@@ -187,6 +209,35 @@ function ProductList() {
       setSearchErrorName("Wystąpił błąd podczas wyszukiwania produktu.");
     }
   };
+
+  const getCategoryName = (categoryId: number): string => {
+  const category = categories.find((cat) => cat.id === categoryId);
+  return category ? category.name : "Nieznana kategoria";
+  };
+
+  const getCategorieById = async (id: number) => {
+    const res = await fetch(`/api/getCategoriesById?id=${id}`);
+    if (!res.ok) {
+      throw new Error("Nie udało się pobrać kategorii");
+    }
+    return await res.json();
+  };
+
+  const fetchCategoryDetails = async (id: number) => {
+    try {
+      const response = await getCategorieById(id);
+      console.log("Odebrano dane kategorii:", response);
+      
+      if (Array.isArray(response) && response.length > 0) {
+        setCategoryDetails(response[0]);
+      } else {
+        console.warn("Brak danych dla tej kategorii");
+        setCategoryDetails(null);
+      }
+    } catch (error) {
+      console.error("Błąd podczas pobierania szczegółów kategorii:", error);
+    }
+};
   return (
     <div className="min-h-screen bg-gray-100 flex flex-col items-center justify-center p-6">
       <div className="bg-white p-8 rounded-lg shadow-md w-full max-w-4xl">
@@ -235,7 +286,7 @@ function ProductList() {
             <p className="text-gray-600 mt-1">Nazwa: {searchedProductById.name}</p>
             <p className="text-gray-600 mt-1">Opis: {searchedProductById.description}</p>
             <p className="text-gray-600 mt-1">Ilość: {searchedProductById.amount}</p>
-            <p className="text-gray-600 mt-1">Kategoria: {searchedProductById.category}</p> 
+            <p className="text-gray-600 mt-1">Kategoria: {getCategoryName(searchedProductById.category)}</p>
             <div className="mt-4">
             <button
                 onClick={() => setProductDetails(searchedProductById)} // Funkcja do wyświetlania szczegółów
@@ -281,7 +332,7 @@ function ProductList() {
             <p className="text-gray-600 mt-1">Nazwa: {searchedProductByName.name}</p>
             <p className="text-gray-600 mt-1">Opis: {searchedProductByName.description}</p>
             <p className="text-gray-600 mt-1">Ilość: {searchedProductByName.amount}</p>
-            <p className="text-gray-600 mt-1">Kategoria: {searchedProductByName.category}</p>
+            <p className="text-gray-600 mt-1">Kategoria: {getCategoryName(searchedProductByName.category)}</p>
             <div className="mt-4">
               <button
                 onClick={() => setProductDetails(searchedProductByName)} // Funkcja do wyświetlania szczegółów
@@ -314,7 +365,7 @@ function ProductList() {
               <h3 className="text-xl font-semibold text-gray-700">Nazwa: {product.name}</h3>
               <p className="text-gray-600 mt-1">Opis: {product.description}</p>
               <div className="text-sm text-gray-500 mt-2">Ilość: {product.amount}</div>
-              <div className="text-sm text-gray-500">Kategoria: {product.category}</div>
+              <div className="text-sm text-gray-500">Kategoria: {getCategoryName(product.category)}</div>
               <button
                 onClick={() => setProductDetails(product)} // Funkcja do wyświetlania szczegółów
                 className="mt-4 bg-purple-500 text-white px-4 py-2 rounded hover:bg-purple-600 mr-2"
@@ -336,29 +387,67 @@ function ProductList() {
             </div>
           ))}
         </div>
+        
         {productDetails && (
-          <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-50">
-            <div className="bg-white p-6 rounded-lg shadow-md w-full sm:w-96">
-              <h3 className="text-2xl font-bold mb-4">Szczegóły produktu</h3>
-              <p><strong>ID:</strong> {productDetails.id}</p>
-              <p><strong>Nazwa:</strong> {productDetails.name}</p>
-              <p><strong>Opis:</strong> {productDetails.description}</p>
-              <p><strong>Ilość:</strong> {productDetails.amount}</p>
-              <p><strong>Kategoria:</strong> {productDetails.category}</p>
-              <p><strong>Kod kreskowy:</strong> {productDetails.barCode}</p>
-              <p><strong>Minimalna ilość:</strong> {productDetails.minAmount}</p>
-              <p><strong>Maksymalna ilość:</strong> {productDetails.maxAmount}</p>
-              <div className="mt-6 flex justify-end">
-                <button
-                  onClick={() => setProductDetails(null)}
-                  className="bg-gray-500 text-white px-4 py-2 rounded hover:bg-gray-600"
-                >
-                  Zamknij
-                </button>
-              </div>
+        <div
+          className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-50"
+          onClick={() => setProductDetails(null)}
+        >
+          <div
+            className="bg-white p-6 rounded-lg shadow-md w-full sm:w-96"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <h3 className="text-2xl font-bold mb-4">Szczegóły produktu</h3>
+            <p><strong>ID:</strong> {productDetails.id}</p>
+            <p><strong>Nazwa:</strong> {productDetails.name}</p>
+            <p><strong>Opis:</strong> {productDetails.description}</p>
+            <p><strong>Ilość:</strong> {productDetails.amount}</p>
+            <p>
+              <strong>Kategoria:</strong> {getCategoryName(productDetails.category)}
+              <button
+                onClick={() => fetchCategoryDetails(productDetails.category)}
+                className="ml-2 text-blue-500 underline text-sm"
+              >
+                Zobacz
+              </button>
+            </p>
+            <p><strong>Kod kreskowy:</strong> {productDetails.barCode}</p>
+            <p><strong>Min. ilość:</strong> {productDetails.minAmount}</p>
+            <p><strong>Maks. ilość:</strong> {productDetails.maxAmount}</p>
+            <div className="mt-6 flex justify-end">
+              <button
+                onClick={() => setProductDetails(null)}
+                className="bg-gray-500 text-white px-4 py-2 rounded hover:bg-gray-600"
+              >
+                Zamknij
+              </button>
             </div>
           </div>
-        )}
+        </div>
+      )}
+
+      {categoryDetails && (
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-50">
+          <div className="bg-white p-6 rounded-lg shadow-md w-full sm:w-96">
+            <h3 className="text-2xl font-bold mb-4">Szczegóły kategorii</h3>
+            <p><strong>ID:</strong> {categoryDetails.id}</p>
+            <p><strong>Nazwa:</strong> {categoryDetails.name}</p>
+            <p><strong>Opis:</strong> {categoryDetails.description}</p>
+            <p><strong>Minimalna cena:</strong> {categoryDetails.minPrice}</p>
+            <p><strong>Maksymalna cena:</strong> {categoryDetails.maxPrice}</p>
+            <p><strong>Waga:</strong> {categoryDetails.weight}</p>
+            <p><strong>Maksymalny rozmiar:</strong> {categoryDetails.maxSize}</p>
+            <div className="mt-6 flex justify-end">
+              <button
+                onClick={() => setCategoryDetails(null)}
+                className="bg-gray-500 text-white px-4 py-2 rounded hover:bg-gray-600"
+              >
+                Zamknij
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
 
         {editingProduct && (
         <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-50">
@@ -396,15 +485,23 @@ function ProductList() {
               />
             </div>
             <div className="mt-4">
-              <label className="block text-sm font-semibold text-gray-700">Kategoria</label>
-              <input
-                type="number"
-                name="category"
-                value={editingProduct.category}
-                onChange={handleChange}
-                className="w-full p-2 border rounded mt-2"
-              />
-            </div>
+            <label className="block text-sm font-semibold text-gray-700">Kategoria</label>
+            <select
+              name="category"
+              value={editingProduct.category}
+              onChange={(e) =>
+                setEditingProduct({ ...editingProduct, category: Number(e.target.value) })
+              }
+              className="w-full p-2 border rounded mt-2"
+            >
+              <option value="">Wybierz kategorię</option>
+              {categories.map((category) => (
+                <option key={category.id} value={category.id}>
+                  {category.name}
+                </option>
+              ))}
+            </select>
+          </div>
             <div className="mt-4">
               <label className="block text-sm font-semibold text-gray-700">Kod kreskowy</label>
               <input

@@ -2,8 +2,10 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { useRouter } from "next/navigation";
+import useAuthRedirect from "@/app/hooks/useAuthRedirect";
 
 function ProductForm() {
+  useAuthRedirect(); 
   const [name, setName] = useState<string>("");
   const [description, setDescription] = useState<string>("");
   const [amount, setAmount] = useState<number | null>(null);
@@ -13,10 +15,21 @@ function ProductForm() {
   const [maxAmount, setMaxAmount] = useState<number | null>(null);
   const [error, setError] = useState<string | null>(null);
   const router = useRouter();
+  const [categories, setCategories] = useState<{ id: number; name: string }[]>([]);
 
-   useEffect(() => {
-    }, []);
+  useEffect(() => {
+    const fetchCategories = async () => {
+      try {
+        const response = await axios.get("/api/showCategories");
+        setCategories(response.data);
+      } catch (error) {
+        console.error("Błąd podczas pobierania kategorii:", error);
+      }
+    };
 
+    fetchCategories();
+  }, []);
+  
     const handleSubmit = async (e: React.FormEvent) => {
       e.preventDefault();
       setError('');
@@ -109,16 +122,20 @@ function ProductForm() {
         />
 
         <label className="block mb-1">Kategoria:</label>
-        <input
+        <select
           name="category"
-          type="number"
-          placeholder="Kategoria"
           value={category ?? ""}
-          min={1}
           onChange={(e) => setCategory(e.target.value === "" ? null : Number(e.target.value))}
           className="w-full p-2 border mb-3 rounded"
           required
-        />
+        >
+          <option value="">Wybierz kategorię</option>
+          {categories.map((cat) => (
+            <option key={cat.id} value={cat.id}>
+              {cat.name}
+            </option>
+          ))}
+        </select>
 
         <label className="block mb-1">Kod kreskowy:</label>
         <input

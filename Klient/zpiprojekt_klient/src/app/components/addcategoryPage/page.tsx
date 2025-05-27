@@ -1,9 +1,11 @@
 "use client";
-import React, { useState } from "react";
+import React, { use, useState } from "react";
 import axios from "axios";
 import { useRouter } from "next/navigation";
+import useAuthRedirect from "@/app/hooks/useAuthRedirect";
 
 function CategoryForm() {
+    useAuthRedirect(); 
     const [name, setName] = useState<string>("");
     const [description, setDescription] = useState<string>("");
     const [minPrice, setMinPrice] = useState<number | null>(null);
@@ -64,7 +66,7 @@ function CategoryForm() {
                     className="w-full p-2 border mb-3 rounded"
                 />
 
-                <label className="block mb-1">Minimalna cena:</label>
+                <label className="block mb-1">Minimalna cena(zł):</label>
                 <input
                     name="minPrice"
                     type="number"
@@ -75,7 +77,7 @@ function CategoryForm() {
                     required
                 />
 
-                <label className="block mb-1">Maksymalna cena:</label>
+                <label className="block mb-1">Maksymalna cena(zł):</label>
                 <input
                     name="maxPrice"
                     type="number"
@@ -86,7 +88,7 @@ function CategoryForm() {
                     required
                 />
 
-                <label className="block mb-1">Waga:</label>
+                <label className="block mb-1">Waga(kg):</label>
                 <input
                     name="weight"
                     type="number"
@@ -96,7 +98,7 @@ function CategoryForm() {
                     className="w-full p-2 border mb-3 rounded"
                 />
 
-                <label className="block mb-1">Maksymalny rozmiar:</label>
+                <label className="block mb-1">Maksymalny rozmiar(CM):</label>
                 <input
                     name="maxSize"
                     type="number"
