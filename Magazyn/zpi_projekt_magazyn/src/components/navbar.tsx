@@ -29,14 +29,14 @@ export default function Navbar() {
             href="/storedProductsPageById"
             className="hover:text-gray-300 transition"
           >
-            Wyszukaj produkt
+            Wyszukaj produkt po ID
           </Link>
 
           <Link
             href="/storageLocation"
             className="hover:text-gray-300 transition"
           >
-            Wyszukaj lokacje
+            Sprawdz lokalizacje
           </Link>
 
           <button
