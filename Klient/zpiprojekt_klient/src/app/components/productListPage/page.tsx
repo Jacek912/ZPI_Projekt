@@ -103,12 +103,15 @@ useEffect(() => {
 }, []);
 
   const handleResetSearch = () => {
+    setSearchId("");
     setSearchName("");
     setSearchCategory("");
+    setSearchErrorId(null);
     setSearchErrorName(null);
     setSearchErrorCategory(null);
     setSearchedProductByName(null);
     setProductsByCategory([]);
+    setSearchedProductById(null);
     fetchProducts();
   };
   const fetchProducts = async () => {
@@ -410,6 +413,12 @@ const handleAddProductToLocation = async (locationId: number, productId: number)
             className="bg-indigo-600 text-white px-4 py-2 rounded hover:bg-indigo-700"
           >
             Szukaj
+          </button>
+          <button
+            onClick={handleResetSearch}
+            className="bg-gray-400 text-white px-4 py-2 rounded hover:bg-gray-500"
+          >
+            Resetuj
           </button>
         </div>
         {searchErrorId && <p className="text-red-500 text-center">{searchErrorId}</p>}
