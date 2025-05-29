@@ -16,43 +16,44 @@ function Dashboard() {
     }
   }, []);
 
-  const handleLogout = () => {
-    localStorage.removeItem("token");
-    setIsLoggedIn(false);
-  };
+  // const handleLogout = () => {
+  //   localStorage.removeItem("token");
+  //   setIsLoggedIn(false);
+  // };
 
-  const handleGoToLogin = () => {
-    router.push("/components/loginPage");
-  };
+  // const handleGoToLogin = () => {
+  //   router.push("/components/loginPage");
+  // };
 
-  const handleDownloadLogs = async () => {
-    try {
-      const res = await fetch("/api/showLogs");
-      const logs = await res.json();
+const handleDownloadLogs = async () => {
+  try {
+    const res = await fetch("/api/showLogs");
+    const logs = await res.json();
 
-      const latestLogs = logs
-        .sort((a:any, b:any) => new Date(b.createdDate).getTime() - new Date(a.createdDate).getTime())
-        .slice(0, 50);
+    const latestLogs = logs
+      .sort((a: any, b: any) => new Date(b.createdDate).getTime() - new Date(a.createdDate).getTime())
+      .slice(0, 50);
 
-      const doc = new jsPDF();
-      doc.text("Ostatnie logi systemowe", 14, 16);
+    const doc = new jsPDF();
+    doc.setFontSize(12);
+    doc.text("Ostatnie logi systemowe", 14, 16);
 
-      autoTable(doc, {
-        startY: 20,
-        head: [["ID", "Nazwa", "Opis", "Data"]],
-        body: latestLogs.map((log:any) => [
-          log.id,
-          log.name,
-          log.description,
-          new Date(log.createdDate).toLocaleString("pl-PL"),
-        ]),
-      });
+    autoTable(doc, {
+      startY: 20,
+      head: [["Dane logów"]],
+      body: latestLogs.map((log: any) => [
+        `${log.description} (${new Date(log.createdDate).toLocaleString("pl-PL")})`
+      ]),
+      styles: { fontSize: 10 },
+      headStyles: { fillColor: [22, 160, 133] },
+      margin: { left: 14, right: 14 },
+    });
 
-      doc.save("LogiSystemowe.pdf");
-    } catch (err) {
-      console.error("Błąd podczas pobierania logów:", err);
-    }
-  };
+    doc.save("LogiSystemowe.pdf");
+  } catch (err) {
+    console.error("Błąd podczas pobierania logów:", err);
+  }
+};
 
   return (
     <div className="relative min-h-screen text-white overflow-hidden">
