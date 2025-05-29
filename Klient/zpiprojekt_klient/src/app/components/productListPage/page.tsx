@@ -396,7 +396,7 @@ const handleAddProductToLocation = async (locationId: number, productId: number)
           </div>
         </Link>
       </button>
-        {/* <h2 className="text-3xl font-bold mb-6 text-center text-gray-800">Lista produktów</h2>
+        <h2 className="text-3xl font-bold mb-6 text-center text-gray-800">Lista produktów</h2>
         <div className="mb-6 flex gap-4 items-center justify-center">
           <input
             type="text"
@@ -442,7 +442,7 @@ const handleAddProductToLocation = async (locationId: number, productId: number)
               </button>
             </div>
           </div>
-        )} */}
+        )}
         <div className="mb-6 flex gap-4 items-center justify-center">
           <input
             type="text"
