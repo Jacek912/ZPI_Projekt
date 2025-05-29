@@ -2,22 +2,24 @@ import { NextRequest, NextResponse } from 'next/server';
 
 export async function DELETE(req: NextRequest) {
   try {
-    process.env.NODE_TLS_REJECT_UNAUTHORIZED = "0"; 
+    process.env.NODE_TLS_REJECT_UNAUTHORIZED = "0";
 
-    const { searchParams } = new URL(req.url);
-    const id = searchParams.get('id');
+    const body = await req.json();
 
-    if (!id) {
-      return NextResponse.json({ error: 'No categories ID provided' }, { status: 400 });
+    if (!body?.id || !body?.name || !body?.description) {
+      return NextResponse.json({ error: 'Niepełne dane lokalizacji' }, { status: 400 });
     }
 
-    console.log("ID:", id);
-
-    const response = await fetch(`https://localhost:7060/ProductCategory?id=${id}`, {
+    const response = await fetch(`https://localhost:7060/StorageLocation`, {
       method: 'DELETE',
       headers: {
         'Content-Type': 'application/json',
       },
+      body: JSON.stringify({
+        id: body.id,
+        name: body.name,
+        description: body.description,
+      }),
     });
 
     if (!response.ok) {

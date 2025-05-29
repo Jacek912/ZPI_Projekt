@@ -61,34 +61,6 @@ function Dashboard() {
         style={{ backgroundImage: 'url(/Tlo3.jpg)' }}
       ></div>
       <div className="relative z-10">
-      {/* NAVBAR */}
-      <nav className="bg-white bg-opacity-10 backdrop-blur-md px-6 py-4 flex justify-between items-center shadow-md">
-        <h1 className="text-2xl font-bold text-white">Panel Administracyjny</h1>
-        <div className="space-x-4">
-          {!isLoggedIn ? (
-            <>
-              <Link href="/components/registrationPage">
-                <button className="bg-purple-500 px-4 py-2 rounded hover:bg-purple-600 transition">
-                  Zarejestruj się
-                </button>
-              </Link>
-              <button
-                onClick={handleGoToLogin}
-                className="bg-yellow-500 px-4 py-2 rounded hover:bg-yellow-600 transition"
-              >
-                Zaloguj się
-              </button>
-            </>
-          ) : (
-            <button
-              onClick={handleLogout}
-              className="bg-red-500 px-4 py-2 rounded hover:bg-red-600 transition"
-            >
-              Wyloguj się
-            </button>
-          )}
-        </div>
-      </nav>
       <div className="flex flex-col items-center justify-center text-center px-4 py-20">
         <div className="bg-white bg-opacity-90 text-gray-800 p-8 rounded-lg shadow-lg max-w-2xl w-full">
           <h2 className="text-3xl font-semibold mb-6">Witamy w systemie zarządzania</h2>
@@ -117,6 +89,16 @@ function Dashboard() {
                 <Link href="/components/categoryListPage">
                   <button className="bg-orange-500 px-5 py-3 rounded-lg text-white hover:bg-orange-600 transition">
                     Kategorie
+                  </button>
+                </Link>
+                <Link href="/components/addLocationPage">
+                  <button className="bg-teal-500 px-5 py-3 rounded-lg text-white hover:bg-teal-600 transition">
+                    Dodaj lokalizację
+                  </button>
+                </Link>
+                <Link href="/components/locationListPage">
+                  <button className="bg-emerald-500 px-5 py-3 rounded-lg text-white hover:bg-emerald-600 transition">
+                    Lokalizacje
                   </button>
                 </Link>
                 <Link href="#">

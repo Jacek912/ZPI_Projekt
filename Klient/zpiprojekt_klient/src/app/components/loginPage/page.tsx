@@ -29,10 +29,9 @@ function LoginForm() {
               throw new Error("No token received");
           }
 
-
           localStorage.setItem("token", token);
-
-
+          window.dispatchEvent(new Event("loginStatusChanged"));
+          
           router.replace("/components/dashboard");
       } catch (error) {
           console.error("Login failed:", error);

@@ -135,13 +135,6 @@ function CategoryList() {
           </Link>
         </button>
         <button>
-          <Link href="/components/addproductPage">
-            <div className="bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600 mb-6 mr-4">
-              Dodaj produkt
-            </div>
-          </Link>
-        </button>
-        <button>
           <Link href="/components/dashboard">
             <div className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 mb-6 mr-4">
               Powrót do panelu

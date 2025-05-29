@@ -30,6 +30,12 @@ interface CategoryDetails {
   maxSize: number | null;
 }
 
+interface Location {
+  id: number;
+  name: string;
+  description: string;
+}
+
 function ProductList() {
   useAuthRedirect();
   const [products, setProducts] = useState<Product[]>([]);
@@ -40,23 +46,51 @@ function ProductList() {
   const [productDetails, setProductDetails] = useState<Product | null>(null);
   const [searchId, setSearchId] = useState<string>("");
   const [searchName, setSearchName] = useState<string>("");
+  const [searchCategory, setSearchCategory] = useState<string>("");
+  const [categoryNamee, setName] = useState<string>("");
+  const [searchErrorCategory, setSearchErrorCategory] = useState<string | null>(null);
+  const [productsByCategory, setProductsByCategory] = useState<Product[]>([]);
   const [searchedProductById, setSearchedProductById] = useState<any | null>(null);
   const [searchedProductByName, setSearchedProductByName] = useState<any | null>(null);
   const [searchErrorId, setSearchErrorId] = useState<string | null>(null);
   const [searchErrorName, setSearchErrorName] = useState<string | null>(null);
   const [categories, setCategories] = useState<Category[]>([]);
   const [categoryDetails, setCategoryDetails] = useState<CategoryDetails | null>(null);
+  const [productLocations, setProductLocations] = useState<{ [productId: number]: Location[] }>({});
+  const [locationDetails, setLocationDetails] = useState<Location | null>(null);
+  const [allLocations, setAllLocations] = useState<Location[]>([]);
+  const [selectedLocationId, setSelectedLocationId] = useState<number | null>(null);
+  const [errorLocation, setErrorLocation] = useState<string | null>(null);
+
+
 
 useEffect(() => {
-  const fetchProductsAndCategories = async () => {
+  const fetchData = async () => {
     try {
-      const [productRes, categoryRes] = await Promise.all([
+      const [productRes, categoryRes, locationRes] = await Promise.all([
         axios.get("/api/showProducts"),
-        axios.get("/api/showCategories")
+        axios.get("/api/showCategories"),
+        axios.get("/api/showLocations"),
       ]);
 
       setProducts(productRes.data);
       setCategories(categoryRes.data);
+      setAllLocations(locationRes.data);
+
+     const productLocationsMap: { [productId: number]: Location[] } = {};
+
+    for (const product of productRes.data) {
+      try {
+        const res = await axios.get(`/api/getStorageLocationsByProductId?productId=${product.id}`);
+        productLocationsMap[product.id] = res.data;
+      } catch (error) {
+        console.error(`Błąd pobierania lokalizacji dla produktu ${product.id}:`, error);
+        productLocationsMap[product.id] = [];
+      }
+    }
+
+    setProductLocations(productLocationsMap);
+
       setLoading(false);
     } catch (error) {
       console.error("Błąd podczas pobierania danych:", error);
@@ -64,8 +98,31 @@ useEffect(() => {
       setLoading(false);
     }
   };
-  fetchProductsAndCategories();
+
+  fetchData();
 }, []);
+
+  const handleResetSearch = () => {
+    setSearchName("");
+    setSearchCategory("");
+    setSearchErrorName(null);
+    setSearchErrorCategory(null);
+    setSearchedProductByName(null);
+    setProductsByCategory([]);
+    fetchProducts();
+  };
+  const fetchProducts = async () => {
+    try {
+      const response = await axios.get("/api/showProducts");
+      setProducts(response.data);
+      setLoading(false);
+      setError(null);
+    } catch (error) {
+      console.error("Błąd podczas pobierania produktów:", error);
+      setError("Wystąpił błąd podczas ładowania produktów.");
+      setLoading(false);
+    }
+  }
 
   const handleEditClick = (product: Product) => {
     setEditingProduct(product);
@@ -215,12 +272,50 @@ useEffect(() => {
   return category ? category.name : "Nieznana kategoria";
   };
 
+  //Filtrowanie po kategorii
+    const handleSearchByCategory = () => {
+  if (!searchCategory.trim()) {
+    setSearchErrorCategory("Wpisz nazwę kategorii.");
+    return;
+  }
+
+    const filtered = filterProductsByCategoryName(searchCategory);
+    if (filtered.length > 0) {
+      setProductsByCategory(filtered);
+      setSearchErrorCategory(null);
+      setName(searchCategory); 
+    } else {
+      setProductsByCategory([]);
+      setSearchErrorCategory("Nie znaleziono produktów w tej kategorii.");
+    }
+  };
+
+  const filterProductsByCategoryName = (categoryName: string): Product[] => {
+    const matchedCategory = categories.find(
+      (cat) => cat.name.toLowerCase() === categoryName.toLowerCase()
+    );
+
+    if (!matchedCategory) return [];
+
+    return products.filter((product) => product.category === matchedCategory.id);
+  };
+
   const getCategorieById = async (id: number) => {
     const res = await fetch(`/api/getCategoriesById?id=${id}`);
     if (!res.ok) {
       throw new Error("Nie udało się pobrać kategorii");
     }
     return await res.json();
+  };
+
+  const fetchLocationDetails = async (locationId: number) => {
+    try {
+      const res = await axios.get(`/api/getLocationById?id=${locationId}`);
+      console.log("Dane lokalizacji:", res.data);
+      setLocationDetails(res.data[0]); 
+    } catch (error) {
+      console.error("Błąd podczas pobierania szczegółów lokalizacji:", error);
+    }
   };
 
   const fetchCategoryDetails = async (id: number) => {
@@ -238,6 +333,52 @@ useEffect(() => {
       console.error("Błąd podczas pobierania szczegółów kategorii:", error);
     }
 };
+
+const handleRemoveProductFromLocation = async (locationId: number, productId: number) => {
+  try {
+    const res = await axios.put(
+      `/api/removeProductWithLocation?locationId=${locationId}&productId=${productId}`
+    );
+
+    if (res.data.success) {
+      // odśwież lokalizacje tylko dla danego produktu
+      const updatedRes = await axios.get(`/api/getStorageLocationsByProductId?productId=${productId}`);
+      setProductLocations((prev) => ({
+        ...prev,
+        [productId]: updatedRes.data,
+      }));
+    } else {
+      setError("Nie udało się usunąć produktu z lokalizacji.");
+    }
+  } catch (error) {
+    console.error("Błąd podczas usuwania produktu z lokalizacji:", error);
+    setError("Wystąpił błąd przy usuwaniu produktu z lokalizacji.");
+  }
+};
+
+const handleAddProductToLocation = async (locationId: number, productId: number) => {
+  try {
+    const res = await axios.put("/api/addProductToLocation", {
+      locationId,
+      productId,
+    });
+
+    if (res.status === 200) {
+      // odśwież lokalizacje tylko dla danego produktu
+      const updatedRes = await axios.get(`/api/getStorageLocationsByProductId?productId=${productId}`);
+      setProductLocations((prev) => ({
+        ...prev,
+        [productId]: updatedRes.data,
+      }));
+    } else {
+      setErrorLocation("Nie udało się dodać produktu do lokalizacji.");
+    }
+  } catch (error) {
+    console.error("Błąd przy dodawaniu produktu:", error);
+    setErrorLocation("Wystąpił błąd przy dodawaniu produktu do lokalizacji.");
+  }
+};
+
   return (
     <div className="min-h-screen bg-gray-100 flex flex-col items-center justify-center p-6">
       <div className="bg-white p-8 rounded-lg shadow-md w-full max-w-4xl">
@@ -249,20 +390,13 @@ useEffect(() => {
         </Link>
       </button>
       <button>
-        <Link href="/components/addcategoryPage">
-          <div className="bg-pink-500 text-white px-4 py-2 rounded hover:bg-green-600 mb-6 mr-4">
-            Dodaj kategorię
-          </div>
-        </Link>
-      </button>
-      <button>
         <Link href="/components/dashboard">
           <div className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-green-600 mb-6 mr-4">
             Powrót do panelu
           </div>
         </Link>
       </button>
-        <h2 className="text-3xl font-bold mb-6 text-center text-gray-800">Lista produktów</h2>
+        {/* <h2 className="text-3xl font-bold mb-6 text-center text-gray-800">Lista produktów</h2>
         <div className="mb-6 flex gap-4 items-center justify-center">
           <input
             type="text"
@@ -308,7 +442,7 @@ useEffect(() => {
               </button>
             </div>
           </div>
-        )}
+        )} */}
         <div className="mb-6 flex gap-4 items-center justify-center">
           <input
             type="text"
@@ -322,6 +456,12 @@ useEffect(() => {
             className="bg-indigo-600 text-white px-4 py-2 rounded hover:bg-indigo-700"
           >
             Szukaj
+          </button>
+          <button
+            onClick={handleResetSearch}
+            className="bg-gray-400 text-white px-4 py-2 rounded hover:bg-gray-500"
+          >
+            Resetuj
           </button>
         </div>
         {searchErrorName && <p className="text-red-500 text-center">{searchErrorName}</p>}
@@ -353,6 +493,65 @@ useEffect(() => {
                 Usuń
               </button>
             </div>
+          </div>
+        )}
+        <div className="mb-6 flex gap-4 items-center justify-center">
+          <input
+            type="text"
+            placeholder="Wyszukaj produkty po kategorii"
+            value={searchCategory}
+            onChange={(e) => setSearchCategory(e.target.value)}
+            className="border rounded px-4 py-2 w-60"
+          />
+          <button
+            onClick={handleSearchByCategory}
+            className="bg-indigo-600 text-white px-4 py-2 rounded hover:bg-indigo-700"
+          >
+            Szukaj
+          </button>
+          <button
+            onClick={handleResetSearch}
+            className="bg-gray-400 text-white px-4 py-2 rounded hover:bg-gray-500"
+          >
+            Resetuj
+          </button>
+        </div>
+        {searchErrorCategory && <p className="text-red-500 text-center">{searchErrorCategory}</p>}
+        {productsByCategory.length > 0 && (
+          <div className="border rounded p-4 shadow mb-6">
+            <h3 className="text-xl font-semibold text-gray-700">
+              Produkty w kategorii "{categoryNamee}"
+            </h3>
+
+            {productsByCategory.map((product) => (
+              <div key={product.id} className="mt-4 border-t pt-4">
+                <p className="text-gray-600">ID: {product.id}</p>
+                <p className="text-gray-600">Nazwa: {product.name}</p>
+                <p className="text-gray-600">Opis: {product.description}</p>
+                <p className="text-gray-600">Ilość: {product.amount}</p>
+                <p className="text-gray-600">Kategoria: {getCategoryName(product.category)}</p>
+                <div className="mt-2">
+                  <button
+                    onClick={() => setProductDetails(product)}
+                    className="bg-purple-500 text-white px-4 py-2 rounded hover:bg-purple-600 mr-2"
+                  >
+                    Szczegóły
+                  </button>
+                  <button
+                    onClick={() => handleEditClick(product)}
+                    className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 mr-2"
+                  >
+                    Edytuj
+                  </button>
+                  <button
+                    onClick={() => setProductToDelete(product)}
+                    className="bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600"
+                  >
+                    Usuń
+                  </button>
+                </div>
+              </div>
+            ))}
           </div>
         )}
         {loading && <p>Ładowanie produktów...</p>}
@@ -403,6 +602,73 @@ useEffect(() => {
             <p><strong>Opis:</strong> {productDetails.description}</p>
             <p><strong>Ilość:</strong> {productDetails.amount}</p>
             <p>
+              <strong>Lokalizacja:</strong>{" "}
+              {productLocations[productDetails.id]?.[0]?.name ?? "Brak"}
+            </p>
+
+            {productLocations[productDetails.id]?.[0]?.id ? (
+              <div className="mt-2">
+                <button
+                  onClick={() =>
+                    fetchLocationDetails(productLocations[productDetails.id][0].id)
+                  }
+                  className="ml-2 text-blue-500 underline text-sm"
+                >
+                  Zobacz
+                </button>
+                <button
+                  onClick={() =>
+                    handleRemoveProductFromLocation(
+                      productLocations[productDetails.id][0].id,
+                      productDetails.id
+                    )
+                  }
+                  className="ml-4 text-red-500 underline text-sm"
+                >
+                  Usuń
+                </button>
+              </div>
+            ) : (
+              <div className="ml-2 flex flex-col sm:flex-row sm:items-center gap-2 mt-2 sm:mt-0">
+                <select
+                  value={selectedLocationId ?? ""}
+                  onChange={(e) => {
+                    const value = Number(e.target.value);
+                    setSelectedLocationId(value);
+                    if (value) {
+                      setErrorLocation(null);
+                    }
+                  }}
+                  className="border rounded px-2 py-1 text-sm"
+                >
+                  <option value="">Wybierz lokalizację</option>
+                  {allLocations.map((loc) => (
+                    <option key={loc.id} value={loc.id}>
+                      {loc.name}
+                    </option>
+                  ))}
+                </select>
+
+                <button
+                  onClick={() => {
+                    if (selectedLocationId) {
+                      handleAddProductToLocation(selectedLocationId, productDetails.id);
+                      setErrorLocation(null);
+                    } else {
+                      setErrorLocation("Wybierz lokalizację przed dodaniem.");
+                    }
+                  }}
+                  className="text-green-500 underline text-sm"
+                >
+                  Dodaj do lokalizacji
+                </button>
+
+                {errorLocation && !selectedLocationId && (
+                  <span className="text-red-500 text-sm">{errorLocation}</span>
+                )}
+              </div>
+            )}
+            <p>
               <strong>Kategoria:</strong> {getCategoryName(productDetails.category)}
               <button
                 onClick={() => fetchCategoryDetails(productDetails.category)}
@@ -440,6 +706,31 @@ useEffect(() => {
             <div className="mt-6 flex justify-end">
               <button
                 onClick={() => setCategoryDetails(null)}
+                className="bg-gray-500 text-white px-4 py-2 rounded hover:bg-gray-600"
+              >
+                Zamknij
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {locationDetails && (
+        <div
+          className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-50"
+          onClick={() => setLocationDetails(null)}
+        >
+          <div
+            className="bg-white p-6 rounded-lg shadow-md w-full sm:w-96"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <h3 className="text-xl font-bold mb-4">Szczegóły lokalizacji</h3>
+            <p><strong>ID:</strong> {locationDetails.id}</p>
+            <p><strong>Nazwa:</strong> {locationDetails.name}</p>
+            <p><strong>Opis:</strong> {locationDetails.description}</p>
+            <div className="mt-4 text-right">
+              <button
+                onClick={() => setLocationDetails(null)}
                 className="bg-gray-500 text-white px-4 py-2 rounded hover:bg-gray-600"
               >
                 Zamknij
@@ -532,7 +823,6 @@ useEffect(() => {
                 className="w-full p-2 border rounded mt-2"
               />
             </div>
-
             <div className="mt-6 flex justify-end">
               <button
                 onClick={handleSave}

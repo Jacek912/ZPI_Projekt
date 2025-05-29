@@ -8,10 +8,10 @@ export async function GET(req: NextRequest) {
     const id = searchParams.get('id');
 
     if (!id) {
-      return NextResponse.json({ error: 'Brak ID kategorii' }, { status: 400 });
+      return NextResponse.json({ error: 'Brak ID lokalizacji' }, { status: 400 });
     }
 
-    const response = await fetch(`https://localhost:7060/ProductCategory/GetById?id=${id}`, {
+    const response = await fetch(`https://localhost:7060/StorageLocation/GetById?id=${id}`, {
       method: 'GET',
       headers: {
         'Accept': 'application/json',
@@ -21,7 +21,7 @@ export async function GET(req: NextRequest) {
     if (!response.ok) {
       const text = await response.text();
       console.error('Błąd GET:', response.status, text);
-      return NextResponse.json({ error: 'Błąd backendu przy pobieraniu kategorii' }, { status: 500 });
+      return NextResponse.json({ error: 'Błąd backendu przy pobieraniu lokalizacji' }, { status: 500 });
     }
 
     const data = await response.json();
