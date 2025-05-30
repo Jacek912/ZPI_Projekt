@@ -2,6 +2,8 @@
 
 import { useState } from 'react';
 import axios from 'axios';
+import useAuthRedirect from "@/hooks/useAuthRedirect";
+import Navbar from '@/components/navbar';
 
 interface Product {
   id: number;
@@ -10,6 +12,7 @@ interface Product {
 }
 
 export default function ProductPage() {
+  useAuthRedirect();
   const [products, setProducts] = useState<Product[]>([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -43,8 +46,8 @@ export default function ProductPage() {
       await axios.put('/api/updateProduct', {
         id: selectedProduct.id,
         name: selectedProduct.name,
-        description: "string", // zakładamy placeholdery
-        productId: selectedProduct.id, // lub inny jeśli się różni
+        description: "string", 
+        productId: selectedProduct.id, 
         operationCategory: "string",
         amount: newAmount,
       });
@@ -62,6 +65,7 @@ export default function ProductPage() {
 
   return (
     <div className="p-6 min-h-screen bg-[#F0F6FD]">
+      <Navbar/>
       <h1 className="text-2xl font-bold mb-4">Produkty</h1>
 
       <button
@@ -116,6 +120,7 @@ export default function ProductPage() {
             </h2>
 
             <input
+              min="0"
               type="number"
               className="border p-2 w-full rounded mb-4"
               value={newAmount}
