@@ -76,6 +76,11 @@ export default function Navbar() {
                 Lokalizacje
               </button>
             </Link>
+            <Link href="/components/registrationPage">
+              <button className="bg-purple-500 px-4 py-2 rounded hover:bg-purple-600 text-white transition border-2 border-black">
+                Stwórz konto
+              </button>
+            </Link>
           </>
         )}
 
@@ -84,11 +89,6 @@ export default function Navbar() {
           <Link href="/components/dashboard">
               <button className="bg-blue-500 px-4 py-2 rounded hover:bg-blue-600 text-white transition border-2 border-black">
                 Panel Główny
-              </button>
-            </Link>
-            <Link href="/components/registrationPage">
-              <button className="bg-purple-500 px-4 py-2 rounded hover:bg-purple-600 text-white transition border-2 border-black">
-                Zarejestruj się
               </button>
             </Link>
             <button
