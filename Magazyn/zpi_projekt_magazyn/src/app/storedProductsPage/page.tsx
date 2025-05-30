@@ -120,6 +120,7 @@ export default function ProductPage() {
             </h2>
 
             <input
+              min="0"
               type="number"
               className="border p-2 w-full rounded mb-4"
               value={newAmount}

@@ -20,7 +20,7 @@ export async function GET(request: NextRequest) {
 
     if (!backendRes.ok) {
       const text = await backendRes.text();
-      console.error('❌ Błąd z backendu:', backendRes.status, text);
+      console.error(' Błąd z backendu:', backendRes.status, text);
       return NextResponse.json({ error: 'Nie znaleziono produktów dla lokalizacji' }, { status: 404 });
     }
 
@@ -32,7 +32,7 @@ export async function GET(request: NextRequest) {
       },
     });
   } catch (error: any) {
-    console.error('❌ Błąd proxy API:', error.message);
+    console.error(' Błąd proxy API:', error.message);
     return NextResponse.json({ error: 'Błąd serwera proxy' }, { status: 500 });
   }
 }

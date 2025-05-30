@@ -14,5 +14,5 @@ const response = await fetch("https://localhost:7060/Product/GetAll"); if (!resp
 
         const data = await response.json();
         return NextResponse.json(data);
-    } catch (error: any) { console.error("❌ Błąd w proxy route:", error.message); return NextResponse.json({ error: error.message || "Błąd proxy API" }, { status: 500 }); }
+    } catch (error: any) { console.error(" Błąd w proxy route:", error.message); return NextResponse.json({ error: error.message || "Błąd proxy API" }, { status: 500 }); }
 }

@@ -23,7 +23,7 @@ export async function GET(request: NextRequest) {
     const data = await backendRes.json();
     return NextResponse.json(data);
   } catch (error: any) {
-    console.error('❌ Błąd proxy API:', error.message);
+    console.error(' Błąd proxy API:', error.message);
     return NextResponse.json({ error: 'Błąd serwera proxy' }, { status: 500 });
   }
 }
