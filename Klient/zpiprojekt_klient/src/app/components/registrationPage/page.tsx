@@ -37,7 +37,7 @@ function RegistrationForm() {
 
   const handleModalConfirm = () => {
     setShowModal(false);
-    router.replace('/components/loginPage');
+    router.replace('/components/dashboard');
   };
 
   return (
