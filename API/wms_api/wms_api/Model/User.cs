@@ -1,4 +1,4 @@
-﻿namespace wms_api
+﻿namespace wms_api.Model
 {
     using System.ComponentModel.DataAnnotations;
     public class User
@@ -7,5 +7,10 @@
         public int Id { get; set; }
         public string? Login { get; set; }
         public string? Password { get; set; }
+
+        public string GetPack()
+        {
+            return "Id: " + Id + "Login: " + Login;
+        }
     }
 }

@@ -1,4 +1,4 @@
-﻿namespace wms_api
+﻿namespace wms_api.Model
 {
     using System.ComponentModel.DataAnnotations;
     public class ProductCategory
@@ -11,6 +11,17 @@
         public double? MaxPrice { get; set; }
         public double? Weight { get; set; }
         public double? MaxSize { get; set; }
+
+        public string GetPack()
+        {
+            return "Id: " + Id + ", " +
+                   "Name: " + Name + ", " +
+                   "Desc: " + Description + ", " +
+                   "MinPrice: " + MinPrice + ", " +
+                   "MaxPrice: " + MaxPrice + ", " +
+                   "Weight: " + Weight + ", " +
+                   "MaxSize: " + MaxSize;
+        }
 
     }
 }

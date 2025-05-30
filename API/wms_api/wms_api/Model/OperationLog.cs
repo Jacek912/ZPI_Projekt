@@ -1,4 +1,4 @@
-﻿namespace wms_api
+﻿namespace wms_api.Model
 {
     using System.ComponentModel.DataAnnotations;
     public class OperationLog
@@ -10,6 +10,7 @@
         public int? ProductId { get; set; }
         public string? OperationCategory { get; set; }
         public int? Amount { get; set; }
+        public DateTime? CreatedDate { get; set; } = DateTime.Now;
 
     }
 }

@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using System.Net;
 using wms_api.Database;
+using wms_api.Model;
 
 namespace wms_api.Controllers
 {
@@ -36,13 +37,22 @@ namespace wms_api.Controllers
             };
             _dbContext.ProductCategories.Add(newProductCategory);
             _dbContext.SaveChanges();
+            SaveOperationLog("ProductCategoryController_POST", newProductCategory.GetPack());
             return StatusCode((int)HttpStatusCode.OK, newProductCategory);
         }
 
         [HttpGet]
-        public IEnumerable<ProductCategory> Get()
+        [Route("GetAll/")]
+        public IEnumerable<ProductCategory> GetAll()
         {
             return _dbContext.ProductCategories;
+        }
+
+        [HttpGet]
+        [Route("GetById/")]
+        public IEnumerable<ProductCategory> GetById(int id)
+        {
+            return _dbContext.ProductCategories.Where(category => category.Id == id);
         }
 
         [HttpPut]
@@ -61,6 +71,7 @@ namespace wms_api.Controllers
             targetProductCategory.MaxSize = productCategory.MaxSize;
             _dbContext.ProductCategories.Update(targetProductCategory);
             _dbContext.SaveChanges();
+            SaveOperationLog("ProductCategoryController_PUT", targetProductCategory.GetPack());
             return StatusCode((int)HttpStatusCode.OK, "Updated!");
         }
 
@@ -74,7 +85,17 @@ namespace wms_api.Controllers
             }
             _dbContext.ProductCategories.Remove(productCategory);
             _dbContext.SaveChanges();
+            SaveOperationLog("ProductCategoryController_DELETE", productCategory.GetPack());
             return StatusCode((int)HttpStatusCode.OK, "Deleted!");
+        }
+
+        private void SaveOperationLog(string name, string description)
+        {
+            OperationLog log = new OperationLog();
+            log.Name = name;
+            log.Description = description;
+            _dbContext.OperationLogs.Add(log);
+            _dbContext.SaveChanges();
         }
 
     }
