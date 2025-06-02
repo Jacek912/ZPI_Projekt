@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("wms_api")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+3edb8c0c2e35193d12ba471486383e5075289091")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+b720dc995f51f599649949168187bff6fd5ccc59")]
 [assembly: System.Reflection.AssemblyProductAttribute("wms_api")]
 [assembly: System.Reflection.AssemblyTitleAttribute("wms_api")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

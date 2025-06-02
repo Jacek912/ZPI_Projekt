@@ -59,6 +59,10 @@ namespace wms_api.Controllers
             {
                 return StatusCode((int)HttpStatusCode.InternalServerError, "No user with id: " + user.Id);
             }
+            if (user.Login == "admin")
+            {
+                return StatusCode((int)HttpStatusCode.InternalServerError, "Forbidden login!");
+            }
             targetUser.Login = user.Login;
             targetUser.Password = user.Password;
             _dbContext.Users.Update(targetUser);
